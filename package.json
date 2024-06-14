@@ -41,6 +41,9 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "cross-env": "^7.0.3",
+    "prettier": "^3.3.2",
+    "sass": "^1.77.5"
   }
 }
