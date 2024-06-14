@@ -1,0 +1,17 @@
+:root {
+  --gray: #2D2C32;
+  --contrast-gray: #3d3d42;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-size: larger;
+}
+
+body {
+  background: var(--gray);
+  padding-top: 24px;
+  padding-left: 116px;
+}

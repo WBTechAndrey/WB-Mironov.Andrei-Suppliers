@@ -1,4 +1,4 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Button } from "../common/Button";
 import "./index.scss";
 import { getAllCookieNames } from "../../helpers/getAllCookieNames";
