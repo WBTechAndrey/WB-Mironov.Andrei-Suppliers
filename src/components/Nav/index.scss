@@ -1,0 +1,22 @@
+.header {
+  background: var(--contrast-gray);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 485px;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  padding: 0 2px;
+}
+
+.btn {
+  height: 36px;
+  font-size: 0.9rem;
+  padding: 8px;
+  &.active {
+    color: var(--gray);
+    background: var(--white);
+    border-radius: 10px;
+  }
+}

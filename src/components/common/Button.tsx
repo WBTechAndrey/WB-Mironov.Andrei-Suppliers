@@ -10,11 +10,15 @@ interface ButtonProps {
 export const Button: FC<ButtonProps> = ({
   onClick,
   disabled = false,
-  className = "btn",
+  className,
   children,
 }) => {
   return (
-    <button onClick={onClick} disabled={disabled} className={className}>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`btn ${className || ""}`}
+    >
       {children}
     </button>
   );
