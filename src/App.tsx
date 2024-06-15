@@ -1,14 +1,14 @@
 import React from "react";
 import { Nav } from "./components/Nav/Nav";
-import logo from "./assets/wb.svg";
-import { Main } from "./components/Main/Main";
+import { Table } from "./components/Main/Table";
+import { Header } from "./components/Main/Header/Header";
 
 function App() {
   return (
     <>
-      <img className="logo" src={logo} alt="logo"></img>
       <Nav />
-      <Main />
+      <Header />
+      <Table />
     </>
   );
 }

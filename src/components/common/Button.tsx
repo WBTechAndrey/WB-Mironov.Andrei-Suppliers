@@ -4,7 +4,8 @@ interface ButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
+  text?: string;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -12,14 +13,12 @@ export const Button: FC<ButtonProps> = ({
   disabled = false,
   className,
   children,
+  text,
 }) => {
   return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`btn ${className || ""}`}
-    >
+    <button onClick={onClick} disabled={disabled} className={className}>
       {children}
+      {text}
     </button>
   );
 };

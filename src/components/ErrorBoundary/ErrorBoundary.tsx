@@ -4,7 +4,7 @@ import "./index.scss";
 import { getAllCookieNames } from "../../helpers/getAllCookieNames";
 import { resetCookies } from "../../helpers/resetCookies";
 import { Title } from "../common/Title";
-import { Text } from "../common/Text";
+import { Txt } from "../common/Txt";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -54,7 +54,7 @@ export class ErrorBoundary extends Component<
             title="It seems something went wrong..."
           />
           <div className="something-wrong">
-            <Text
+            <Txt
               className="something-wrong__info"
               text={
                 this.state.error
@@ -62,7 +62,7 @@ export class ErrorBoundary extends Component<
                   : "Error is unknown"
               }
             />
-            <Text
+            <Txt
               className="something-wrong__info"
               text={
                 this.state.info
@@ -70,7 +70,7 @@ export class ErrorBoundary extends Component<
                   : "Error information is unknown"
               }
             />
-            <Text
+            <Txt
               className="something-wrong__info"
               text={
                 this.state.errorTime

@@ -1,0 +1,28 @@
+.nav {
+  background: var(--contrast-gray);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 485px;
+  width: 100%;
+  height: 40px;
+  border-radius: var(--basic-border);
+  padding: 0 2px;
+}
+
+.btn {
+  height: 36px;
+  font-size: 0.8rem;
+  padding: 8px;
+  border-radius: var(--basic-border);
+
+  &:hover:not(.active) {
+    background: var(--white-gray);
+  }
+}
+
+.active {
+  color: var(--gray);
+  background: var(--white);
+  border-radius: var(--basic-border);
+}

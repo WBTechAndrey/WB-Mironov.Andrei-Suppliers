@@ -1,0 +1,28 @@
+.select {
+  position: relative;
+  background: var(--gray);
+  border-radius: var(--basic-border);
+  max-width: 133px;
+  height: 36px;
+  flex-basis: 100%;
+  flex-grow: 1;
+  cursor: pointer;
+  &.active {
+    background-color: var(--whitest-gray);
+  }
+}
+
+.figure {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  font-size: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.arrow {
+  width: 15px;
+}

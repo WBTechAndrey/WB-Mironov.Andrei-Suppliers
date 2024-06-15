@@ -1,0 +1,60 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 26px;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.productManagement {
+  display: flex;
+  gap: 24px;
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 8px 5px 5px;
+  border-radius: var(--basic-border);
+
+  &:hover {
+    background: var(--white-gray);
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  background: var(--contrast-gray);
+  width: 360px;
+  height: 44px;
+  padding: 4px;
+  border-radius: var(--basic-border);
+
+}
+
+
+.search {
+  background: transparent;
+  border: none;
+  width: 100%;
+  padding: 8px;
+  font-size: 0.8rem;
+}
+
+.searchIcon {
+  width: 32px;
+  padding-right: 8px;
+}
+
+.info {
+  font-size: 0.8rem;
+  @media screen and (width < 376px) {
+    display: none;
+  }
+}

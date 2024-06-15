@@ -6,7 +6,7 @@ interface TextProps {
   text?: string | null;
 }
 
-export const Text: FC<TextProps> = ({ className, style, text = "" }) => {
+export const Txt: FC<TextProps> = ({ className, style, text = "" }) => {
   return (
     <span className={className} style={style}>
       {text}
