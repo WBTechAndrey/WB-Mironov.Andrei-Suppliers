@@ -1,0 +1,135 @@
+@import '../../../styles/mixins';
+
+.table {
+  display: grid;
+  border-collapse: collapse;
+  grid-template-columns:
+          minmax(70px, 90px)
+          minmax(110px, 1.1fr)
+          minmax(100px, 1.22fr)
+          minmax(100px, 1.2fr)
+          minmax(100px, 1.23fr)
+          minmax(100px, 2.67fr)
+          minmax(95px, 0.8fr)
+          minmax(40px, 40px);
+  grid-template-rows: 30px;
+  grid-auto-rows: 72px;
+  font-size: 0.82rem;
+  row-gap: 4px;
+  padding-top: 30px;
+}
+
+.table .list:hover .item {
+  & ~ ul {
+    background-color: var(--hover-items);
+  }
+
+  background-color: var(--hover-items);
+}
+
+.header,
+.cards,
+.list {
+  display: contents;
+}
+
+
+.headItem {
+  font-size: 0.7rem;
+  display: grid;
+  align-content: center;
+  &:first-child span {
+    padding-left: 10px;
+  }
+}
+
+.item {
+  color: var(--white);
+  background-color: var(--contrast-gray);
+
+  & > span {
+    @include ellipsis;
+  }
+}
+
+.list {
+  & .item {
+    color: var(--white);
+    display: grid;
+    align-content: center;
+    padding-right: 10px;
+
+    &.orange span,
+    &.green span {
+      height: 18px;
+      border-radius: var(--basic-border);
+      font-size: 0.6rem;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+    }
+
+    &.orange span {
+      color: var(--orange-text);
+      background-color: var(--orange-bg);
+      width: 93px;
+      @include ellipsis
+    }
+
+    &.green span {
+      color: var(--green-text);
+      background-color: var(--green-bg);
+      width: 50px;
+    }
+  }
+
+  & > .item {
+    &:first-child {
+      border-top-left-radius: var(--big-border);
+      border-bottom-left-radius: var(--big-border);
+      padding-left: 12px;
+      padding-right: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--big-border);
+      border-bottom-right-radius: var(--big-border);
+      padding-right: 5px;
+    }
+  }
+
+  @include transform-position(2, -1px);
+  @include transform-position(3, -2px);
+  @include transform-position(4, -3px);
+  @include transform-position(5, -4px);
+  @include transform-position(6, -5px);
+  @include transform-position(7, -6px);
+  @include transform-position(8,-7px);
+
+  & > ul {
+    background-color: var(--contrast-gray);
+    & .item:last-child {
+      color: var(--text-gray);
+      font-size: 0.6rem;
+    }
+    li {
+      height: 50%;
+    }
+  }
+
+  & > li:last-child{
+    justify-content: center;
+    span {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-content: center;
+      border-radius: var(--basic-border);
+      &:hover {
+        background-color: var(--whitest-gray);
+      }
+    }
+    & img {
+    }
+  }
+}

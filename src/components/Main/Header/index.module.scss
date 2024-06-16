@@ -3,11 +3,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding-top: 26px;
+  padding-top: 23px;
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 1.65rem;
+  font-weight: 700;
 }
 
 .productManagement {
@@ -20,7 +21,7 @@
   align-items: center;
   gap: 10px;
   padding: 5px 8px 5px 5px;
-  border-radius: var(--basic-border);
+  border-radius: var(--big-border);
 
   &:hover {
     background: var(--white-gray);
@@ -34,7 +35,7 @@
   width: 360px;
   height: 44px;
   padding: 4px;
-  border-radius: var(--basic-border);
+  border-radius: var(--big-border);
 
 }
 
@@ -43,17 +44,18 @@
   background: transparent;
   border: none;
   width: 100%;
-  padding: 8px;
+  padding: 4px 0 4px 18px;
   font-size: 0.8rem;
 }
 
 .searchIcon {
-  width: 32px;
-  padding-right: 8px;
+  width: 36px;
+  padding-right: 12px;
 }
 
 .info {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 400;
   @media screen and (width < 376px) {
     display: none;
   }

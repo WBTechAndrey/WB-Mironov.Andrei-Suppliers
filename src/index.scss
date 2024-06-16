@@ -17,6 +17,7 @@
   --hover-items: #5f5e63;
 
   --basic-border: 10px;
+  --big-border: 14px;
 
   --portals-font-family-hauss: "WB Hauss", sans-serif
 }
@@ -172,8 +173,9 @@ button {
   outline: none;
 }
 
-ul, ol {
+ul, ol, li {
   list-style: none;
+  padding: 0;
 }
 
 a {
@@ -224,6 +226,7 @@ html {
 
 body {
   background: var(--gray);
+  //background: white;
   padding: 24px 24px 0 116px;
   color: var(--white)
 }
@@ -231,5 +234,5 @@ body {
 .logo {
   position: fixed;
   left: 18px;
-  top: 26px;
+  top: 31px;
 }

@@ -1,0 +1,16 @@
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin transform-position($index, $left) {
+  & .transform:nth-child(#{$index}) {
+    margin-left: $left;
+  }
+  .headItem {
+    &:nth-child(#{$index}) {
+      padding-left: $left;
+    }
+  }
+}
