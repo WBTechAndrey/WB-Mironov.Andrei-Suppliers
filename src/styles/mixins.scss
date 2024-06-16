@@ -10,7 +10,7 @@
   }
   .headItem {
     &:nth-child(#{$index}) {
-      padding-left: $left;
+      margin-left: $left;
     }
   }
 }
