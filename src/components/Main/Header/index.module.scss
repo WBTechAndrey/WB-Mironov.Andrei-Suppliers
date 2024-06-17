@@ -21,7 +21,7 @@
   align-items: center;
   gap: 10px;
   padding: 5px 8px 5px 5px;
-  border-radius: var(--big-border);
+  border-radius: var(--medium-border);
 
   &:hover {
     background: var(--white-gray);
@@ -35,10 +35,8 @@
   width: 360px;
   height: 44px;
   padding: 4px;
-  border-radius: var(--big-border);
-
+  border-radius: var(--medium-border);
 }
-
 
 .search {
   background: transparent;

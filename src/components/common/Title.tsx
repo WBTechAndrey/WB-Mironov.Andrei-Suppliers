@@ -15,8 +15,7 @@ export const Title: FC<TitleProps> = memo(function Title({
 }) {
   return (
     <Tag id={id} {...props}>
-      {" "}
-      {title}{" "}
+      {title}
     </Tag>
   );
 });

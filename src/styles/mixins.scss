@@ -14,3 +14,24 @@
     }
   }
 }
+
+@mixin rows($num-rows, $row-width) {
+  width: #{$row-width}px;
+  height: calc(#{$num-rows} * 44px);
+  left: 0;
+
+  & ul {
+    display: grid;
+    grid-template-rows: repeat(#{$num-rows}, 44px);
+    grid-template-columns: 1fr;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    li {
+      height: 44px;
+    }
+  }
+}

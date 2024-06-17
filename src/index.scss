@@ -10,14 +10,26 @@
   --orange-bg: #7c3d12;
   --green-bg: #14532b;
   --orange-text: #fdb172;
-  --green-text: #85ef89;
+  --green-text: #85EF89;
 
   --text-gray: #8b8a8e;
+  --text-info-modal: #818084;
+  --text-quantity-modal: #6e6d72;
+  --text-puprle-gray: #767386;
+
+  --button-bg: #4649E5;
 
   --hover-items: #5f5e63;
 
   --basic-border: 10px;
-  --big-border: 14px;
+  --medium-border: 14px;
+  --big-border: 16px;
+
+  --calendar-border: rgba(240, 240, 243, 0.9);
+  --calendar-selected: #E4EAFF;
+
+  --light-font-size: 13px;
+  --basic-font-size: 16px;
 
   --portals-font-family-hauss: "WB Hauss", sans-serif
 }
@@ -226,7 +238,6 @@ html {
 
 body {
   background: var(--gray);
-  //background: white;
   padding: 24px 24px 0 116px;
   color: var(--white)
 }
@@ -235,4 +246,18 @@ body {
   position: fixed;
   left: 18px;
   top: 31px;
+}
+
+.activeItem {
+  background: var(--white-hover);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

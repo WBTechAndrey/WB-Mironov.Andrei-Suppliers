@@ -9,6 +9,7 @@
   flex-basis: 100%;
   flex-grow: 1;
   cursor: pointer;
+  padding: 8px;
 
   span {
     @include ellipsis;
@@ -16,6 +17,14 @@
 
   &.active {
     background-color: var(--whitest-gray);
+  }
+
+  &.fiveRows, &.twoRows, &.threeRows {
+    width: 500px;
+    max-width: 100%;
+    padding: 0 18px 0 16px;
+    height: 44px;
+    background-color: var(--contrast-gray);
   }
 }
 
@@ -27,9 +36,17 @@
   font-size: 0.85rem;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
+
+  span {
+    user-select: none;
+  }
 }
 
 .arrow {
   width: 20px;
+  user-select: none;
+}
+
+.modal .arrow {
+  width: 17px;
 }

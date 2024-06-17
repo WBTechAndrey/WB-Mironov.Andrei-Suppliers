@@ -1,34 +1,51 @@
 import { Txt } from "../../components/common/Txt";
-import { Dispatch, FC, ReactNode, SetStateAction } from "react";
+import React, { Dispatch, FC, ReactNode, SetStateAction } from "react";
 import style from "./index.module.scss";
-import { DropDown } from "../DropDown/DropDown";
 import arrowTop from "../../assets/icons/arrow-top.svg";
 import arrowDown from "../../assets/icons/arrow-down.svg";
+import { City } from "../../store/AddShip/AddShipSlice";
+import { DropDown } from "../DropDown/DropDown";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { combinedClassNames } from "../../helpers/combinedClassNames";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux/redux";
+import { setActiveId } from "../../store/OpenDropDownMenu/isOpenSlice";
 
 interface SelectProps {
-  text: string;
-  styleName: string;
-  listItems: ReactNode;
-  isActive: boolean;
-  setIsActive: Dispatch<SetStateAction<boolean>>;
+  text?: string;
+  listItems?: ReactNode;
+  isActive?: boolean;
+  setIsActive?: Dispatch<SetStateAction<boolean>>;
+  data: City[];
+  action: ActionCreatorWithPayload<number>;
+  classNames: Array<string>;
 }
 
-export const Select: FC<SelectProps> = ({
-  text,
-  styleName,
-  listItems,
-  isActive,
-  setIsActive,
-}) => {
-  const toggleMenu = (e: any) => {
-    e.preventDefault();
-    setIsActive((prev) => !prev);
+export const Select: FC<SelectProps> = ({ data, action, classNames }) => {
+  const activeText = data.find((city) => city.selected);
+  const textToShow = activeText ? activeText.text : "";
+  const { activeId } = useAppSelector((state) => state.setIsOpen);
+  const dispatch = useAppDispatch();
+  const isActive = activeId === textToShow;
+
+  const handleFigureClick = () => {
+    if (isActive) {
+      dispatch(setActiveId(null));
+    } else {
+      dispatch(setActiveId(textToShow));
+    }
   };
 
+  const allClassNames = combinedClassNames(classNames, style);
+
   return (
-    <div className={`${style.select} ${isActive ? style.active : ""}`.trim()}>
-      <figure className={style.figure} onClick={toggleMenu}>
-        <Txt text={text} />
+    <div
+      className={`${style.select} ${allClassNames} ${isActive ? style.active : ""}`.trim()}
+    >
+      <figure
+        className={`${style.figure} figureClassic`}
+        onClick={handleFigureClick}
+      >
+        <Txt text={textToShow} />
         <img
           className={style.arrow}
           src={isActive ? arrowTop : arrowDown}
@@ -36,9 +53,11 @@ export const Select: FC<SelectProps> = ({
         />
       </figure>
       <DropDown
-        styleName={styleName}
+        classNames={classNames}
+        data={data}
         isActive={isActive}
-        listItems={listItems}
+        setIsActive={() => setActiveId(null)}
+        action={action}
       />
     </div>
   );

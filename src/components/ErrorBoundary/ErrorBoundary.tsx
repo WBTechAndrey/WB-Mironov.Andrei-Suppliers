@@ -1,8 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Button } from "../common/Button";
 import "./index.scss";
-import { getAllCookieNames } from "../../helpers/getAllCookieNames";
-import { resetCookies } from "../../helpers/resetCookies";
+import { getAllCookieNames } from "../../helpers/Cookies/getAllCookieNames";
+import { resetCookies } from "../../helpers/Cookies/resetCookies";
 import { Title } from "../common/Title";
 import { Txt } from "../common/Txt";
 

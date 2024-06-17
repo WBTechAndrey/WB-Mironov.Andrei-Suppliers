@@ -1,3 +1,5 @@
+@import '../../styles/mixins';
+
 .menu {
   position: absolute;
   top: 41px;
@@ -5,10 +7,7 @@
   color: var(--black);
   border-radius: var(--basic-border);
   overflow: hidden;
-
-  &.hidden {
-    display: none;
-  }
+  z-index: 1;
 
   &:hover {
     pointer-events: auto;
@@ -25,17 +24,30 @@
       align-items: center;
       padding-left: 10px;
       cursor: pointer;
-      font-size: 0.9em;
+      font-size: 0.75em;
       &:hover {
         background: var(--white-hover);
       }
     }
   }
+
+  &.hidden {
+    display: none;
+  }
 }
 
-.basic {
-  width: 192px;
-  height: 180px;
-  z-index: 1;
+.fourRows {
+  @include rows(4, 192)
 }
 
+.fiveRows {
+  @include rows(5, 400);
+}
+
+.twoRows {
+  @include rows(2, 400);
+}
+
+.threeRows {
+  @include rows(3, 400);
+}
