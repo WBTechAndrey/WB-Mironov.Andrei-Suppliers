@@ -41,7 +41,16 @@
 .sendBtn {
   background-color: var(--button-bg);
   display: block;
-  width: 80px;
   height: 36px;
+  padding: 10px;
   border-radius: var(--basic-border);
+}
+
+.disabled {
+  background-color: black;
+  user-select: none;
+}
+
+.sendBtnEdit {
+
 }

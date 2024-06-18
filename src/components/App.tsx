@@ -1,7 +1,8 @@
 import React from "react";
 import { Nav } from "./Nav/Nav";
-import { Table } from "./Main/Table/Table";
-import { Header } from "./Main/Header/Header";
+import { Table } from "./Table/Table";
+import { Header } from "./Header/Header";
+
 function App() {
   return (
     <>

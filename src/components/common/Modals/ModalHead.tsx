@@ -3,24 +3,26 @@ import { Title } from "../Title";
 import { Txt } from "../Txt";
 import { Button } from "../Button";
 import closeIcon from "../../../assets/icons/close-icon.svg";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 interface FooterProps {
-  onClose: () => void;
+  onClose: (arg: boolean) => void;
+  number: string;
+  title: string;
 }
 
-export const Header: FC<FooterProps> = ({ onClose }) => {
+export const ModalHead: FC<FooterProps> = memo(({ onClose, number, title }) => {
   return (
     <header className={style.header}>
-      <Title className={style.title} id="modal-title" title="Новая поставка" />
-      <Txt className={style.shipId} text={`#02387`} />
+      <Title className={style.title} id="modal-title" title={title} />
+      <Txt className={style.shipId} text={`#${number.slice(-6)}`} />
       <Button
         aria-label="Close"
         className={style.closeButton}
-        onClick={onClose}
+        onClick={() => onClose(true)}
       >
         <img src={closeIcon} alt="icon to close modal" />
       </Button>
     </header>
   );
-};
+});

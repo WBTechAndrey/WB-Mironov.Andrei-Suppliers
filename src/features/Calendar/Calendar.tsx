@@ -5,17 +5,17 @@ import { useAppDispatch } from "../../hooks/redux/redux";
 import { setDate } from "../../store/AddShip/AddShipSlice";
 import { formatDate } from "../../helpers/formatDate";
 import { useSelector } from "react-redux";
-import { selectShippingData } from "../../store/AddShip/selectors";
+import { selectDeliveryDate } from "../../store/AddShip/selectors";
 
 interface CalendarComponentProps {
-  calendarRef: React.RefObject<Calendar>;
+  calendarRef: React.RefObject<Calendar | null> | undefined;
 }
 
 export const CalendarComponent: React.FC<CalendarComponentProps> = ({
   calendarRef,
 }) => {
   const calendarInstanceRef = useRef<Calendar | null>(null);
-  const shippingData = useSelector(selectShippingData);
+  const deliveryDate = useSelector(selectDeliveryDate);
   const dispatch = useAppDispatch();
 
   const handleDateChange = useCallback(
@@ -48,11 +48,11 @@ export const CalendarComponent: React.FC<CalendarComponentProps> = ({
   }, [calendarRef, handleDateChange]);
 
   useEffect(() => {
-    if (shippingData.date) {
-      const dtd = formatDate(shippingData.date);
-      if (dtd) calendarInstanceRef.current?.setDate(dtd);
+    if (deliveryDate) {
+      const date = formatDate(deliveryDate);
+      if (date) calendarInstanceRef.current?.setDate(date);
     }
-  }, [shippingData.date]);
+  }, [deliveryDate, dispatch]);
 
-  return <div className={`figureClassic`} id="calendar"></div>;
+  return <div className={`noClose`} id="calendar"></div>;
 };

@@ -37,17 +37,22 @@
 }
 
 .fourRows {
-  @include rows(4, 192)
+  @include rows(4, 192, 0)
 }
 
 .fiveRows {
-  @include rows(5, 400);
+  @include rows(5, 400, 0);
 }
 
 .twoRows {
-  @include rows(2, 400);
+  @include rows(2, 400, 0);
+}
+
+.twoRowsOnTable {
+  @include rows(2, 140, -98);
+  top: 60px;
 }
 
 .threeRows {
-  @include rows(3, 400);
+  @include rows(3, 400, 0);
 }

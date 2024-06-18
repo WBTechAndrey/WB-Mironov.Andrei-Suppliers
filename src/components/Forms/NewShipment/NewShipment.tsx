@@ -1,49 +1,74 @@
-import style from "./index.module.scss";
-import React, { FC, useCallback, useEffect, useRef } from "react";
+import React, { FC, memo, useCallback, useEffect, useRef } from "react";
 import { CalendarComponent } from "../../../features/Calendar/Calendar";
-import calendarIcon from "../../../assets/icons/calendar.svg";
-import { styleNames } from "../../../features/DropDown/DropDown";
 import { useAppDispatch } from "../../../hooks/redux/redux";
 import Calendar from "color-calendar";
 import {
   resetSelections,
-  setCitySelected,
+  setAll,
+  setCity,
   setQuantity,
   setStatus,
   setType,
   setWarehouse,
 } from "../../../store/AddShip/AddShipSlice";
-import { FormField } from "../../common/Modals/FormField";
-import { SelectField } from "../../common/Modals/SelectField";
-import { Txt } from "../../common/Txt";
 import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
 import {
   selectCities,
+  selectDeliveryDate,
+  selectDeliveryType,
+  selectNumber,
   selectQuantity,
-  selectShippingData,
   selectStatus,
-  selectType,
   selectWarehouse,
 } from "../../../store/AddShip/selectors";
 import { useSelector } from "react-redux";
 import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
-import { Footer } from "../../common/Modals/Footer";
-import { Header } from "../../common/Modals/Header";
+import { testAPI } from "../../../store/API/testApi";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { ShipmentForm } from "../ShipmentForm";
+import { ShipmentModal } from "../ShipmentModal";
 
 interface NewShipmentProps {
-  onClose: () => void;
+  onClose: (arg: boolean) => void;
 }
+export type Actions = {
+  setType: ActionCreatorWithPayload<number>;
+  setCity: ActionCreatorWithPayload<number>;
+  setWarehouse: ActionCreatorWithPayload<number>;
+  setStatus: ActionCreatorWithPayload<number>;
+  setQuantity: ActionCreatorWithPayload<string>;
+};
 
-export const NewShipment: FC<NewShipmentProps> = ({ onClose }) => {
+export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
   const dispatch = useAppDispatch();
   const calendarRef = useRef<Calendar | null>(null);
   const activeId = useSelector(selectActiveId);
-  const shippingData = useSelector(selectShippingData);
+  const deliveryDate = useSelector(selectDeliveryDate);
+  const number = useSelector(selectNumber);
+  const [createPost, { isLoading, isSuccess }] =
+    testAPI.usePostShipmentsMutation();
+
   const cities = useSelector(selectCities);
   const quantity = useSelector(selectQuantity);
-  const type = useSelector(selectType);
+  const type = useSelector(selectDeliveryType);
   const warehouse = useSelector(selectWarehouse);
   const status = useSelector(selectStatus);
+
+  const actions: Actions = {
+    setType,
+    setCity,
+    setWarehouse,
+    setStatus,
+    setQuantity,
+  };
+
+  const { data } = testAPI.useGetInfoToAddShipQuery("", {
+    refetchOnMountOrArgChange: true,
+  });
+
+  useEffect(() => {
+    dispatch(setAll(data));
+  }, [data, dispatch]);
 
   const setOpened = useCallback(() => {
     if (activeId === "calendar") {
@@ -52,22 +77,6 @@ export const NewShipment: FC<NewShipmentProps> = ({ onClose }) => {
       dispatch(setActiveId("calendar"));
     }
   }, [activeId, dispatch]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!(event.target as HTMLElement).closest(`.figureClassic`)) {
-        dispatch(setActiveId(null));
-      }
-    };
-
-    if (activeId) {
-      document.addEventListener("mouseup", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mouseup", handleClickOutside);
-    };
-  }, [activeId, dispatch, onClose]);
 
   useEffect(() => {
     return () => {
@@ -81,64 +90,28 @@ export const NewShipment: FC<NewShipmentProps> = ({ onClose }) => {
   }, []);
 
   return (
-    <div className={style.modalOverlay}>
-      <dialog
-        className={style.modal}
-        open
-        aria-labelledby="modal-title"
-        aria-describedby="modal-form"
-      >
-        <Header onClose={onClose} />
-        <form className={style.form} id="modal-form">
-          <FormField label="Дата поставки" className="dataContainer">
-            <input
-              type="text"
-              placeholder={shippingData.date || "__.__.____"}
-              className={`${style.date} ${style.noFocus} figureClassic`}
-              onClick={setOpened}
-              onFocus={focused}
-            />
-            <img src={calendarIcon} alt="calendar icon" />
-            {activeId === "calendar" && (
-              <CalendarComponent calendarRef={calendarRef} />
-            )}
-          </FormField>
-          <SelectField
-            label="Город"
-            data={cities}
-            action={setCitySelected}
-            classNames={["modal", styleNames.fiveRows]}
-          />
-          <FormField label="Количество" className="dataContainer">
-            <input
-              type="number"
-              className={`${style.date} ${style.quantity}`}
-              value={quantity}
-              onChange={(e) => dispatch(setQuantity(Number(e.target.value)))}
-            />
-            <Txt text={`шт.`}></Txt>
-          </FormField>
-          <SelectField
-            label="Тип поставки"
-            data={type}
-            action={setType}
-            classNames={["modal", styleNames.twoRows]}
-          />
-          <SelectField
-            label="Склад"
-            data={warehouse}
-            action={setWarehouse}
-            classNames={["modal", styleNames.threeRows]}
-          />
-          <SelectField
-            label="Статус"
-            data={status}
-            action={setStatus}
-            classNames={["modal", styleNames.twoRows]}
-          />
-        </form>
-        <Footer onClose={onClose} />
-      </dialog>
-    </div>
+    <ShipmentModal
+      onClose={onClose}
+      number={number}
+      title="Новая поставка"
+      formId="new-shipment-form"
+      footerProps={{ createPost, isLoading, isSuccess }}
+    >
+      <ShipmentForm
+        target="new"
+        warehouse={warehouse}
+        status={status}
+        quantity={quantity}
+        cities={cities}
+        type={type}
+        actions={actions}
+        deliveryDate={deliveryDate}
+        setOpened={setOpened}
+        focused={focused}
+        activeId={activeId}
+        calendarRef={calendarRef}
+        CalendarComponent={CalendarComponent}
+      />
+    </ShipmentModal>
   );
-};
+});

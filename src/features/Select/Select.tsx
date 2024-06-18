@@ -1,32 +1,32 @@
 import { Txt } from "../../components/common/Txt";
-import React, { Dispatch, FC, ReactNode, SetStateAction } from "react";
+import React, { Dispatch, FC, memo, ReactNode, SetStateAction } from "react";
 import style from "./index.module.scss";
 import arrowTop from "../../assets/icons/arrow-top.svg";
 import arrowDown from "../../assets/icons/arrow-down.svg";
-import { City } from "../../store/AddShip/AddShipSlice";
 import { DropDown } from "../DropDown/DropDown";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { combinedClassNames } from "../../helpers/combinedClassNames";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux/redux";
+import { useAppDispatch } from "../../hooks/redux/redux";
 import { setActiveId } from "../../store/OpenDropDownMenu/isOpenSlice";
+import { selectActiveId } from "../../store/OpenDropDownMenu/selectors";
+import { useSelector } from "react-redux";
+import { DropDownState } from "../../types";
 
 interface SelectProps {
   text?: string;
   listItems?: ReactNode;
-  isActive?: boolean;
   setIsActive?: Dispatch<SetStateAction<boolean>>;
-  data: City[];
-  action: ActionCreatorWithPayload<number>;
+  data: DropDownState[];
+  action?: ActionCreatorWithPayload<number>;
   classNames: Array<string>;
 }
 
-export const Select: FC<SelectProps> = ({ data, action, classNames }) => {
+export const Select: FC<SelectProps> = memo(({ data, action, classNames }) => {
   const activeText = data.find((city) => city.selected);
   const textToShow = activeText ? activeText.text : "";
-  const { activeId } = useAppSelector((state) => state.setIsOpen);
+  const activeId = useSelector(selectActiveId);
   const dispatch = useAppDispatch();
   const isActive = activeId === textToShow;
-
   const handleFigureClick = () => {
     if (isActive) {
       dispatch(setActiveId(null));
@@ -41,10 +41,7 @@ export const Select: FC<SelectProps> = ({ data, action, classNames }) => {
     <div
       className={`${style.select} ${allClassNames} ${isActive ? style.active : ""}`.trim()}
     >
-      <figure
-        className={`${style.figure} figureClassic`}
-        onClick={handleFigureClick}
-      >
+      <figure className={`${style.figure} noClose`} onClick={handleFigureClick}>
         <Txt text={textToShow} />
         <img
           className={style.arrow}
@@ -56,9 +53,9 @@ export const Select: FC<SelectProps> = ({ data, action, classNames }) => {
         classNames={classNames}
         data={data}
         isActive={isActive}
-        setIsActive={() => setActiveId(null)}
+        onClick={() => setActiveId(null)}
         action={action}
       />
     </div>
   );
-};
+});

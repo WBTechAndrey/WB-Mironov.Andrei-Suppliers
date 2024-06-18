@@ -1,4 +1,4 @@
-@import '../../../styles/mixins';
+@import '../../styles/mixins';
 
 .table {
   display: grid;
@@ -38,6 +38,10 @@
   font-size: 0.7rem;
   display: grid;
   align-content: center;
+
+  &:last-child span {
+    visibility: hidden;
+  }
 
   &:first-child span {
     padding-left: 10px;
@@ -126,6 +130,7 @@
 
   & > li:last-child {
     justify-content: center;
+      position: relative;
 
     span {
       width: 36px;
@@ -133,6 +138,7 @@
       display: grid;
       place-content: center;
       border-radius: var(--basic-border);
+      cursor: pointer;
 
       &:hover {
         background-color: var(--whitest-gray);

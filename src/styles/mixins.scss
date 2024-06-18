@@ -15,10 +15,10 @@
   }
 }
 
-@mixin rows($num-rows, $row-width) {
+@mixin rows($num-rows, $row-width, $left) {
   width: #{$row-width}px;
   height: calc(#{$num-rows} * 44px);
-  left: 0;
+  left: #{$left}px;
 
   & ul {
     display: grid;

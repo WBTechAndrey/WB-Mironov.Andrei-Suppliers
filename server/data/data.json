@@ -1,0 +1,142 @@
+{
+  "infoToAddShip": {
+    "number": "1718751063224",
+    "deliveryDate": "",
+    "cities": [
+      {
+        "text": "Москва",
+        "id": 1,
+        "selected": true
+      },
+      {
+        "text": "Псков",
+        "id": 2,
+        "selected": false
+      },
+      {
+        "text": "Тверь",
+        "id": 3,
+        "selected": false
+      },
+      {
+        "text": "Абакан",
+        "id": 4,
+        "selected": false
+      },
+      {
+        "text": "Нижний Новгород",
+        "id": 5,
+        "selected": false
+      },
+      {
+        "text": "Кострома",
+        "id": 6,
+        "selected": false
+      },
+      {
+        "text": "Ярославль",
+        "id": 7,
+        "selected": false
+      }
+    ],
+    "quantity": 0,
+    "deliveryType": [
+      {
+        "text": "Короб",
+        "id": 1,
+        "selected": true
+      },
+      {
+        "text": "Монопаллета",
+        "id": 2,
+        "selected": false
+      }
+    ],
+    "warehouse": [
+      {
+        "text": "Склад",
+        "id": 1,
+        "selected": true
+      },
+      {
+        "text": "СЦ Абакан",
+        "id": 2,
+        "selected": false
+      },
+      {
+        "text": "Черная Грязь",
+        "id": 3,
+        "selected": false
+      },
+      {
+        "text": "Внуково",
+        "id": 4,
+        "selected": false
+      },
+      {
+        "text": "Белая дача",
+        "id": 5,
+        "selected": false
+      },
+      {
+        "text": "Электросталь",
+        "id": 6,
+        "selected": false
+      },
+      {
+        "text": "Вёшки",
+        "id": 7,
+        "selected": false
+      }
+    ],
+    "status": [
+      {
+        "text": "В пути",
+        "id": 1,
+        "selected": true
+      },
+      {
+        "text": "Задерживается",
+        "id": 2,
+        "selected": false
+      }
+    ]
+  },
+  "shipments": [
+    {
+      "id": "1718751067689",
+      "number": "1718751063224",
+      "deliveryDate": "21.06.2024",
+      "city": "Москва",
+      "quantity": "3",
+      "deliveryType": "Короб",
+      "warehouse": {
+        "name": "Склад",
+        "address": "ул. Индустриальная, д. 9/1"
+      },
+      "status": "В пути"
+    }
+  ],
+  "searchData": [
+    {
+      "text": "По номеру",
+      "id": 1,
+      "selected": true
+    },
+    {
+      "text": "По городу",
+      "id": 2,
+      "selected": false
+    },
+    {
+      "text": "По типу поставки",
+      "id": 3,
+      "selected": false
+    },
+    {
+      "text": "По статусу",
+      "id": 4,
+      "selected": false
+    }
+  ]
+}
