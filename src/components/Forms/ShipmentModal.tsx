@@ -3,7 +3,7 @@ import React, { FC, memo } from "react";
 import { ModalHead } from "./Components/ModalHead";
 import { ModalFoot } from "./Components/ModalFoot";
 import { FooterPropsData, FormPropsData, Inputs } from "../../types";
-import { FetchingInfo } from "../common/Info/FetchingInfo";
+import { FetchingInfo } from "../common/Loaders/FetchingInfo";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useAppSelector } from "../../hooks/redux/redux";
 import { useSelector } from "react-redux";

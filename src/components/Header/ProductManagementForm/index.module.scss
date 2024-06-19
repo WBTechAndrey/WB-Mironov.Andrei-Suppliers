@@ -27,6 +27,9 @@
   display: flex;
   justify-content: space-between;
   background: var(--contrast-gray);
+  &:hover {
+    background-color: var(--hover-items);
+  }
   width: 360px;
   height: 44px;
   padding: 4px;

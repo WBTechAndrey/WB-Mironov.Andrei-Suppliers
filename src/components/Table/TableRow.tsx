@@ -6,6 +6,7 @@ import { DropDown, styleNames } from "../../features/DropDown/DropDown";
 import { createPortal } from "react-dom";
 import { EditShipment } from "../Forms/EditShipment/EditShipment";
 import { testAPI } from "../../store/API/testApi";
+import { DotLoader } from "../common/Loaders/DotLoader";
 
 interface Warehouse {
   name: string;
@@ -53,7 +54,7 @@ const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
   const [isActive, sesIsActive] = useState(false);
   const [activeId, setActiveId] = useState("");
 
-  const [deleteData] = testAPI.useDeleteShipmentByIdMutation();
+  const [deleteData, { isLoading }] = testAPI.useDeleteShipmentByIdMutation();
 
   const toggleShowModal = useCallback(() => {
     setShowModal((prev) => !prev);
@@ -102,7 +103,11 @@ const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
             id={String(spanId)}
             onClick={() => handleFigureClick(String(spanId))}
           >
-            <img src={ellipsis} alt="ellipsis icon" />
+            {isLoading ? (
+              <DotLoader />
+            ) : (
+              <img src={ellipsis} alt="ellipsis icon" />
+            )}
             <DropDown
               data={data}
               isActive={isActive}

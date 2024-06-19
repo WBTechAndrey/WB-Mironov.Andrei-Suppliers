@@ -14,7 +14,6 @@ type FooterProps = Partial<FormPropsData> &
 export const ModalFoot: FC<FooterProps> = memo(
   ({
     onClose,
-    createPost,
     target,
     isLoading,
     updateShip,
@@ -22,7 +21,6 @@ export const ModalFoot: FC<FooterProps> = memo(
     isErrorInit,
     isLoadingInit,
     isFetchingInit,
-    isSubmitSuccessful,
     getValues,
   }) => {
     const updateData = useAppSelector((state) => state.editShip);
@@ -31,8 +29,6 @@ export const ModalFoot: FC<FooterProps> = memo(
       isErrorInit || isFetchingInit || isLoadingInit || isLoading;
 
     const sendData = useCallback(async () => {
-      // if (!isSubmitSuccessful) return;
-      // if (loadingData) return;
       const quantity = getValues("quantity");
       if (quantity) {
         if (updateShip) {

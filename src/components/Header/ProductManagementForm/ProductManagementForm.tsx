@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectSearch } from "../../../store/TableSearch/selectors";
 import { useAppDispatch } from "../../../hooks/redux/redux";
@@ -14,8 +14,13 @@ import { Txt } from "../../common/Txt";
 import { Button } from "../../common/Button";
 import style from "./index.module.scss";
 import iconPlus from "../../../assets/icons/icon-plus.svg";
+import { useDebounce } from "../../../hooks/useDebounce";
+import { HeaderProps } from "../Header";
+import { useSearchParams } from "react-router-dom";
 
-export const ProductManagementForm = memo(() => {
+export const ProductManagementForm: FC<HeaderProps> = memo(() => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const data = useSelector(selectSearch);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useAppDispatch();
@@ -60,9 +65,52 @@ export const ProductManagementForm = memo(() => {
     };
   }, [dispatch]);
 
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
+  const searchValue = useDebounce(value);
 
-  const onChange = () => {};
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  let currentSearchItem = "";
+  if (data && data.find((el) => el.selected)) {
+    currentSearchItem = data.find((el) => el.selected)!.text;
+  } else {
+    currentSearchItem = "";
+  }
+
+  useEffect(() => {
+    setValue("");
+  }, [currentSearchItem]);
+
+  useEffect(() => {
+    const params: Record<string, string> = {
+      ...Object.fromEntries(searchParams),
+    };
+
+    const keys: Record<string, string> = {
+      "По номеру": "number",
+      "По типу поставки": "deliveryType",
+      "По статусу": "status",
+      "По городу": "city",
+    };
+
+    const currentKey = keys[currentSearchItem as keyof typeof keys];
+
+    if (searchValue) {
+      params[currentKey] = searchValue;
+    } else {
+      delete params[currentKey];
+    }
+
+    Object.values(keys).forEach((key) => {
+      if (key !== currentKey) {
+        delete params[key];
+      }
+    });
+
+    setSearchParams(params);
+  }, [currentSearchItem, searchParams, searchValue, setSearchParams]);
 
   return (
     <section className={style.productManagement}>
@@ -76,7 +124,7 @@ export const ProductManagementForm = memo(() => {
           data={data}
           action={setTableSearch}
         />
-        <Input />
+        <Input onChange={onChange} value={value} />
       </form>
       {showModal &&
         createPortal(<NewShipment onClose={handleCloseModal} />, document.body)}

@@ -21,6 +21,15 @@ interface responseData {
   currentPage: number;
 }
 
+interface queryRequest {
+  page: string;
+  limit: string;
+  number: string | null;
+  city: string | null;
+  deliveryType: string | null;
+  status: string | null;
+}
+
 export const testAPI = createApi({
   reducerPath: "testAPI",
   baseQuery: fetchBaseQuery({
@@ -37,11 +46,15 @@ export const testAPI = createApi({
         url: `/add`,
       }),
     }),
-    getShipments: build.query<responseData, { page: number; limit: number }>({
-      query: ({ page, limit }) => ({
-        url: `/shipments`,
-        params: { page, limit },
-      }),
+    getShipments: build.query<responseData, queryRequest>({
+      query: ({ page, limit, number, city, deliveryType, status }) => {
+        const params = new URLSearchParams({ page, limit });
+        if (number) params.append("number", number);
+        if (city) params.append("city", city);
+        if (deliveryType) params.append("deliveryType", deliveryType);
+        if (status) params.append("status", status);
+        return { url: `/shipments`, params };
+      },
       providesTags: () => ["Shipment"],
     }),
     postShipments: build.mutation<EditShipState, AddShipState>({
