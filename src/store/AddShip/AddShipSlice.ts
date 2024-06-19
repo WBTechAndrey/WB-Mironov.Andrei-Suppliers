@@ -5,7 +5,7 @@ const initialState: AddShipState = {
   number: "",
   deliveryDate: "",
   cities: [{ text: "Loading", id: 1, selected: true }],
-  quantity: "0",
+  quantity: "",
   deliveryType: [{ text: "Loading", id: 1, selected: true }],
   warehouse: [{ text: "Loading", id: 1, selected: true }],
   status: [{ text: "Loading", id: 1, selected: true }],
@@ -38,7 +38,6 @@ const addShipSlice = createSlice({
       state.quantity = action.payload;
     },
     setType(state, action: PayloadAction<number>) {
-      console.log(action.payload);
       state.deliveryType = setSelected(state.deliveryType, action.payload);
     },
     setWarehouse(state, action: PayloadAction<number>) {

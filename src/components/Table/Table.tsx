@@ -15,7 +15,8 @@ const TableComponent = () => {
   });
 
   if (isLoading || isFetching) return <FetchingInfo message={`Loading...`} />;
-  if (error) return <FetchingInfo message={`Error loading shipments`} />;
+  if (error)
+    return <FetchingInfo message={`Упс... не удалось загрузить поставки`} />;
 
   return (
     <>

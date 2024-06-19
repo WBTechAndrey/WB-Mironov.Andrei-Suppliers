@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 42px;
+  flex-grow: 1;
 }
 
 .modal {
@@ -45,6 +46,7 @@
   &::-webkit-input-placeholder {
     font-size: var(--basic-font-size);
   }
+    font-size: var(--basic-font-size);
 
   & ~ img {
     width: 18px;
@@ -88,4 +90,12 @@
   font-size: var(--light-font-size);
   font-weight: 500;
   color: var(--text-info-modal);
+}
+
+.error {
+  position: absolute;
+  font-size: var(--light-font-size);
+  color: var(--orange-text);
+  top: -22px;
+  right: 13px;
 }

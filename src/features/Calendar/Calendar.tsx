@@ -6,13 +6,17 @@ import { setDate } from "../../store/AddShip/AddShipSlice";
 import { formatDate } from "../../helpers/formatDate";
 import { useSelector } from "react-redux";
 import { selectDeliveryDate } from "../../store/AddShip/selectors";
+import { Inputs } from "../../types";
+import { UseFormSetValue } from "react-hook-form";
 
 interface CalendarComponentProps {
   calendarRef: React.RefObject<Calendar | null> | undefined;
+  setValue?: UseFormSetValue<Inputs>;
 }
 
 export const CalendarComponent: React.FC<CalendarComponentProps> = ({
   calendarRef,
+  setValue,
 }) => {
   const calendarInstanceRef = useRef<Calendar | null>(null);
   const deliveryDate = useSelector(selectDeliveryDate);
@@ -26,8 +30,9 @@ export const CalendarComponent: React.FC<CalendarComponentProps> = ({
         year: "numeric",
       });
       dispatch(setDate(formattedDate));
+      if (setValue) setValue("calendar", formattedDate);
     },
-    [dispatch],
+    [dispatch, setValue],
   );
 
   useEffect(() => {

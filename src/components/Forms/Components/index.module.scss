@@ -40,14 +40,15 @@
 
 .sendBtn {
   background-color: var(--button-bg);
-  display: block;
+  display: grid;
+  place-content: center;
   height: 36px;
   padding: 10px;
   border-radius: var(--basic-border);
 }
 
 .disabled {
-  background-color: black;
+  background-color: var(--button-bg-disabled);
   user-select: none;
 }
 

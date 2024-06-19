@@ -1,7 +1,7 @@
 import style from "./index.module.scss";
-import { Title } from "../Title";
-import { Txt } from "../Txt";
-import { Button } from "../Button";
+import { Title } from "../../common/Title";
+import { Txt } from "../../common/Txt";
+import { Button } from "../../common/Button";
 import closeIcon from "../../../assets/icons/close-icon.svg";
 import React, { FC, memo } from "react";
 

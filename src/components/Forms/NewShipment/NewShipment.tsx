@@ -24,20 +24,13 @@ import {
 import { useSelector } from "react-redux";
 import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
 import { testAPI } from "../../../store/API/testApi";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { ShipmentForm } from "../ShipmentForm";
 import { ShipmentModal } from "../ShipmentModal";
+import { Actions } from "../../../types";
 
 interface NewShipmentProps {
   onClose: (arg: boolean) => void;
 }
-export type Actions = {
-  setType: ActionCreatorWithPayload<number>;
-  setCity: ActionCreatorWithPayload<number>;
-  setWarehouse: ActionCreatorWithPayload<number>;
-  setStatus: ActionCreatorWithPayload<number>;
-  setQuantity: ActionCreatorWithPayload<string>;
-};
 
 export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
   const dispatch = useAppDispatch();
@@ -62,7 +55,13 @@ export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
     setQuantity,
   };
 
-  const { data } = testAPI.useGetInfoToAddShipQuery("", {
+  const {
+    data,
+    isFetching: isFetchingInit,
+    isLoading: isLoadingInit,
+    isError: isErrorInit,
+    error: errorInit,
+  } = testAPI.useGetInfoToAddShipQuery("", {
     refetchOnMountOrArgChange: true,
   });
 
@@ -85,33 +84,35 @@ export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
     };
   }, [dispatch]);
 
-  const focused = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-    e.target.blur();
-  }, []);
-
   return (
     <ShipmentModal
-      onClose={onClose}
       number={number}
       title="Новая поставка"
       formId="new-shipment-form"
-      footerProps={{ createPost, isLoading, isSuccess }}
-    >
-      <ShipmentForm
-        target="new"
-        warehouse={warehouse}
-        status={status}
-        quantity={quantity}
-        cities={cities}
-        type={type}
-        actions={actions}
-        deliveryDate={deliveryDate}
-        setOpened={setOpened}
-        focused={focused}
-        activeId={activeId}
-        calendarRef={calendarRef}
-        CalendarComponent={CalendarComponent}
-      />
-    </ShipmentModal>
+      footerProps={{ createPost, isLoading, isSuccess, onClose }}
+      setOpened={setOpened}
+      quantity={quantity}
+      formProps={{
+        isFetchingInit,
+        isLoadingInit,
+        isErrorInit,
+        errorInit,
+      }}
+      componentToRender={
+        <ShipmentForm
+          target="new"
+          warehouse={warehouse}
+          status={status}
+          cities={cities}
+          type={type}
+          actions={actions}
+          deliveryDate={deliveryDate}
+          setOpened={setOpened}
+          activeId={activeId}
+          calendarRef={calendarRef}
+          CalendarComponent={CalendarComponent}
+        />
+      }
+    ></ShipmentModal>
   );
 });

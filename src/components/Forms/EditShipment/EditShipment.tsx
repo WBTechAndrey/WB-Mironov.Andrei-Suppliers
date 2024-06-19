@@ -43,10 +43,10 @@ export const EditShipment: FC<EditShipmentProps> = ({ onClose, activeId }) => {
   }, [data, dispatch]);
 
   const cities = useSelector(selectEditCities);
-  const quantity = useSelector(selectEditQuantity);
   const deliveryType = useSelector(selectEditDeliveryType);
   const warehouse = useSelector(selectEditWarehouse);
   const status = useSelector(selectEditStatus);
+  const quantity = useSelector(selectEditQuantity);
 
   const actions = {
     setCity,
@@ -58,23 +58,26 @@ export const EditShipment: FC<EditShipmentProps> = ({ onClose, activeId }) => {
 
   return (
     <ShipmentModal
-      onClose={onClose}
       number={data ? data.number : ""}
       title="Редактирование"
       formId="edit-shipment-form"
-      footerProps={{ updateShip: updateData, target: "edit", isSuccess }}
-    >
-      {data && (
+      quantity={quantity}
+      footerProps={{
+        updateShip: updateData,
+        target: "edit",
+        isSuccess,
+        onClose,
+      }}
+      componentToRender={
         <ShipmentForm
           target="edit"
           warehouse={warehouse}
           status={status}
-          quantity={quantity}
           cities={cities}
           type={deliveryType}
           actions={actions}
         />
-      )}
-    </ShipmentModal>
+      }
+    ></ShipmentModal>
   );
 };

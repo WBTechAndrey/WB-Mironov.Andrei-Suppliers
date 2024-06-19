@@ -60,6 +60,10 @@ export const ProductManagementForm = memo(() => {
     };
   }, [dispatch]);
 
+  const [value, setValue] = useState();
+
+  const onChange = () => {};
+
   return (
     <section className={style.productManagement}>
       <Button onClick={openModal} className={style.addBtn}>

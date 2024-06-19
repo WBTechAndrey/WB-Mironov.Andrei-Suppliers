@@ -6,7 +6,7 @@ export type EditShipSlice = Omit<EditShipState, "deliveryDate">;
 const initialState: Omit<EditShipState, "deliveryDate"> = {
   number: "",
   id: "",
-  quantity: "0",
+  quantity: "",
   cities: [{ text: "", id: 1, selected: true }],
   deliveryType: [{ text: "", id: 1, selected: true }],
   warehouse: [{ text: "", id: 1, selected: true }],
@@ -30,7 +30,6 @@ const editShipSlice = createSlice({
       state.cities = setSelected(state.cities, action.payload);
     },
     setType(state, action: PayloadAction<number>) {
-      console.log(action);
       state.deliveryType = setSelected(state.deliveryType, action.payload);
     },
     setQuantity(state, action: PayloadAction<string>) {
