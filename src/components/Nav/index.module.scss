@@ -26,3 +26,43 @@
   background: var(--white);
   border-radius: var(--basic-border);
 }
+
+.aside {
+  display: none;
+}
+
+@media screen and (width <= 600px) {
+  .nav {
+    flex-direction: column;
+    width: 100px;
+    height: 400px;
+    display: none;
+  }
+
+  .aside {
+    padding: 20px 9px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+      display: flex;
+      width: 59px;
+      justify-content: space-between;
+    }
+  }
+
+  .navbar {
+    &:after {
+      content: '';
+      width: calc(100% + 16px);
+      height: 1px;
+      background: var(--mobile-line-bg);
+      display: block;
+      position: absolute;
+      top: 59px;
+      left: -16px;
+    }
+  }
+}

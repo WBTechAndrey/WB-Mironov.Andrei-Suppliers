@@ -4,10 +4,11 @@ import { ModalHead } from "./Components/ModalHead";
 import { ModalFoot } from "./Components/ModalFoot";
 import { FooterPropsData, FormPropsData, Inputs } from "../../types";
 import { FetchingInfo } from "../common/Loaders/FetchingInfo";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useAppSelector } from "../../hooks/redux/redux";
 import { useSelector } from "react-redux";
 import { selectDeliveryDate } from "../../store/AddShip/selectors";
+import { withSubmitProps } from "../../helpers/ValidateForm";
 
 interface ShipmentModalProps {
   number: string;
@@ -40,69 +41,39 @@ export const ShipmentModal: FC<ShipmentModalProps> = memo(
       setError,
       clearErrors,
       control,
-      formState: { isSubmitSuccessful, errors },
+      formState: { errors },
     } = useForm<Inputs>();
 
-    const isPastDate = (date: string) => {
-      const [day, month, year] = date.split(".").map(Number);
-      const selectedDate = new Date(year, month - 1, day);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return selectedDate < today;
-    };
-
     const deliveryDate = useSelector(selectDeliveryDate);
-
+    const updateData = useAppSelector((state) => state.editShip);
     const addData = useAppSelector((state) => state.addShip);
-
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-      if (title === "Новая поставка") {
-        if (!deliveryDate) {
-          setError("calendar", {
-            type: "manual",
-            message: "Дата поставки обязательна",
-          });
-          if (setOpened) setOpened();
-          return;
-        }
-
-        if (isPastDate(deliveryDate)) {
-          setError("calendar", {
-            type: "manual",
-            message: "Дата не может быть в прошлом",
-          });
-          if (setOpened) setOpened();
-          return;
-        }
-        clearErrors("calendar");
-      }
-      const currentQuantity = getValues("quantity");
-      if (currentQuantity.length === 0) {
-        setError("quantity", {
-          type: "manual",
-          message: "Количество поставок обязательно",
-        });
-      }
-
-      const quantity = getValues("quantity");
-      const calendar = getValues("calendar");
-      if (quantity && calendar) {
-        if (footerProps.createPost) {
-          const newData = {
-            ...addData,
-            deliveryDate: calendar,
-            quantity: quantity,
-          };
-          footerProps.createPost(newData);
-        }
-      }
-    };
 
     const methods = useForm();
 
+    const onSubmit = withSubmitProps({
+      title,
+      deliveryDate,
+      setError,
+      setOpened,
+      clearErrors,
+      getValues,
+      footerProps,
+      addData,
+      updateData,
+    });
+
     return (
       <>
-        <div className={style.modalOverlay}>
+        <div
+          id={`close`}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+            const target = e.target as HTMLElement;
+            if (target.id === "close") {
+              footerProps.onClose(true);
+            }
+          }}
+          className={style.modalOverlay}
+        >
           <dialog
             className={`${style.modal} ${footerProps.target === "edit" ? style.editModal : ""}`.trim()}
             open
@@ -127,7 +98,7 @@ export const ShipmentModal: FC<ShipmentModalProps> = memo(
             ) : (
               <FormProvider {...methods}>
                 <form
-                  className={style.form}
+                  className={`${style.form} ${footerProps.target === "edit" ? style.editForm : ""}`.trim()}
                   id={formId}
                   onSubmit={handleSubmit(onSubmit)}
                 >
@@ -139,7 +110,6 @@ export const ShipmentModal: FC<ShipmentModalProps> = memo(
                     setValue,
                   })}
                   <ModalFoot
-                    isSubmitSuccessful={isSubmitSuccessful}
                     getValues={getValues}
                     {...footerProps}
                     {...formProps}

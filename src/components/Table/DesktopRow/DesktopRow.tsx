@@ -1,12 +1,17 @@
-import { FC, memo, useCallback, useState } from "react";
-import style from "./index.module.scss";
-import ellipsis from "../../assets/icons/ellipsis.svg";
-import { Txt } from "../common/Txt";
-import { DropDown, styleNames } from "../../features/DropDown/DropDown";
+import { FC, useCallback, useState } from "react";
+import style from "../index.module.scss";
+import ellipsis from "../../../assets/icons/ellipsis.svg";
+import { Txt } from "../../common/Txt";
+import { DropDown, styleNames } from "../../../features/DropDown/DropDown";
 import { createPortal } from "react-dom";
-import { EditShipment } from "../Forms/EditShipment/EditShipment";
-import { testAPI } from "../../store/API/testApi";
-import { DotLoader } from "../common/Loaders/DotLoader";
+import { EditShipment } from "../../Forms/EditShipment/EditShipment";
+import { DotLoader } from "../../common/Loaders/DotLoader";
+import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
+import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
+import { useAppDispatch } from "../../../hooks/redux/redux";
+import { useSelector } from "react-redux";
+import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
+import { DesktopRowData } from "../../../constants";
 
 interface Warehouse {
   name: string;
@@ -26,7 +31,11 @@ interface Item {
 
 type ItemKey = keyof Item;
 
-const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
+interface DesktopRowProps {
+  item: Item;
+}
+
+export const DesktopRow: FC<DesktopRowProps> = ({ item }) => {
   const fields: ItemKey[] = [
     "number",
     "deliveryDate",
@@ -35,38 +44,30 @@ const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
     "deliveryType",
   ];
 
-  const spanId = item.id;
-
-  const data = [
-    {
-      text: "Редактировать",
-      id: 1,
-      selected: false,
-    },
-    {
-      text: "Отменить поставку",
-      id: 2,
-      selected: false,
-    },
-  ];
-
   const [showModal, setShowModal] = useState(false);
-  const [isActive, sesIsActive] = useState(false);
-  const [activeId, setActiveId] = useState("");
+  const [activeIdLocal, setActiveIdLocal] = useState("");
 
-  const [deleteData, { isLoading }] = testAPI.useDeleteShipmentByIdMutation();
+  const [deleteData, { isLoading }] =
+    shipmentsAPI.useDeleteShipmentByIdMutation();
 
   const toggleShowModal = useCallback(() => {
     setShowModal((prev) => !prev);
   }, []);
 
   const deleteDataFunc = () => {
-    deleteData(activeId);
+    deleteData(activeIdLocal);
   };
 
+  const activeId = useSelector(selectActiveId);
+  const isActive = activeId === activeIdLocal;
+  const dispatch = useAppDispatch();
   const handleFigureClick = (id: string) => {
-    sesIsActive((prev) => !prev);
-    setActiveId(id);
+    setActiveIdLocal(id);
+    if (isActive) {
+      dispatch(setActiveId(null));
+    } else {
+      dispatch(setActiveId(id));
+    }
   };
 
   return (
@@ -89,8 +90,9 @@ const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
           <li className={style.item}>
             <Txt text={item.warehouse.name} />
           </li>
-          <li className={style.item}>
+          <li className={`${style.item} ${style.tooltip}`}>
             <Txt text={item.warehouse.address} />
+            <Txt className={style.tooltiptext} text={item.warehouse.address} />
           </li>
         </ul>
         <li
@@ -100,8 +102,8 @@ const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
         </li>
         <li className={`${style.item} ${style.transform}`}>
           <span
-            id={String(spanId)}
-            onClick={() => handleFigureClick(String(spanId))}
+            id={String(item.id)}
+            onClick={() => handleFigureClick(String(item.id))}
           >
             {isLoading ? (
               <DotLoader />
@@ -109,7 +111,7 @@ const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
               <img src={ellipsis} alt="ellipsis icon" />
             )}
             <DropDown
-              data={data}
+              data={DesktopRowData}
               isActive={isActive}
               onClick={toggleShowModal}
               deleteShip={deleteDataFunc}
@@ -120,11 +122,9 @@ const TableRowComponent: FC<{ item: Item }> = ({ item }) => {
       </ul>
       {showModal &&
         createPortal(
-          <EditShipment onClose={toggleShowModal} activeId={activeId} />,
+          <EditShipment onClose={toggleShowModal} activeId={activeIdLocal} />,
           document.body,
         )}
     </>
   );
 };
-
-export const TableRow = memo(TableRowComponent);

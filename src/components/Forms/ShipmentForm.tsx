@@ -88,6 +88,7 @@ export const ShipmentForm: FC<ShipmentFormProps> = memo(
             register={register}
             errors={errors}
             setValue={setValue}
+            target={target}
           />
         ) : null}
         {target === "edit" && formSettings ? (
@@ -95,6 +96,7 @@ export const ShipmentForm: FC<ShipmentFormProps> = memo(
             register={register}
             errors={errors}
             setValue={setValue}
+            target={target}
           />
         ) : (
           <DeliveryTypeComponent type={type} setType={actions.setType} />

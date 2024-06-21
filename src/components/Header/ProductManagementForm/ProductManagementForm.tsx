@@ -1,133 +1,145 @@
-import React, { FC, memo, useCallback, useEffect, useState } from "react";
+import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectSearch } from "../../../store/TableSearch/selectors";
 import { useAppDispatch } from "../../../hooks/redux/redux";
 import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
 import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
-import { setTableSearch } from "../../../store/TableSearch/TableSearchSlice";
+import {
+  setAllItems,
+  setTableSearch,
+} from "../../../store/TableSearch/TableSearchSlice";
 import { Input } from "../../common/Input";
 import { styleNames } from "../../../features/DropDown/DropDown";
-import { createPortal } from "react-dom";
-import { NewShipment } from "../../Forms/NewShipment/NewShipment";
 import { Select } from "../../../features/Select/Select";
 import { Txt } from "../../common/Txt";
-import { Button } from "../../common/Button";
 import style from "./index.module.scss";
-import iconPlus from "../../../assets/icons/icon-plus.svg";
 import { useDebounce } from "../../../hooks/useDebounce";
-import { HeaderProps } from "../Header";
 import { useSearchParams } from "react-router-dom";
+import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
+import { FetchingInfo } from "../../common/Loaders/FetchingInfo";
+import { AddButton } from "./AddButton";
+import { QueryParams } from "../../../types";
 
-export const ProductManagementForm: FC<HeaderProps> = memo(() => {
-  const [searchParams, setSearchParams] = useSearchParams();
+interface ProductManagementFormProps {
+  openModal: () => void;
+}
 
-  const data = useSelector(selectSearch);
-  const [showModal, setShowModal] = useState(false);
-  const dispatch = useAppDispatch();
-  const activeId = useSelector(selectActiveId);
+export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
+  ({ openModal }) => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const data = useSelector(selectSearch);
+    const number = searchParams.get(QueryParams.Number);
+    const city = searchParams.get(QueryParams.City);
+    const deliveryType = searchParams.get(QueryParams.DeliveryType);
+    const status = searchParams.get(QueryParams.Status);
+    const getQueryParams = () => {
+      if (number) return number;
+      if (status) return status;
+      if (city) return city;
+      if (deliveryType) return deliveryType;
+      return "";
+    };
+    const activeId = useSelector(selectActiveId);
+    const currentSearchItemRef = useRef("");
+    const dispatch = useAppDispatch();
+    const [value, setValue] = useState(getQueryParams);
+    const searchValue = useDebounce(value);
 
-  const openModal = useCallback(() => {
-    setShowModal(true);
-  }, []);
+    const { data: serverData, isLoading } =
+      shipmentsAPI.useGetSearchInfoParamsQuery({
+        number,
+        city,
+        deliveryType,
+        status,
+      });
 
-  const closeModal = useCallback(() => {
-    setShowModal(false);
-  }, []);
+    useEffect(() => {
+      if (serverData) dispatch(setAllItems(serverData));
+    }, [dispatch, serverData]);
 
-  const handleCloseModal = useCallback(
-    (isSuccess: boolean) => {
-      if (isSuccess) {
-        closeModal();
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (!(event.target as HTMLElement).closest(`.noClose`)) {
+          dispatch(setActiveId(null));
+        }
+      };
+
+      if (activeId) {
+        document.addEventListener("mouseup", handleClickOutside);
       }
-    },
-    [closeModal],
-  );
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!(event.target as HTMLElement).closest(`.noClose`)) {
+      return () => {
+        document.removeEventListener("mouseup", handleClickOutside);
+      };
+    }, [activeId, dispatch]);
+
+    useEffect(() => {
+      return () => {
         dispatch(setActiveId(null));
+      };
+    }, [dispatch]);
+
+    useEffect(() => {
+      if (data && !isLoading) {
+        const selectedItem = data.find((el) => el.selected);
+        currentSearchItemRef.current = selectedItem ? selectedItem.text : "";
       }
+    }, [data, dispatch, isLoading]);
+
+    const onChange = (value: string) => {
+      setValue(value);
     };
 
-    if (activeId) {
-      document.addEventListener("mouseup", handleClickOutside);
-    }
+    useEffect(() => {
+      const params = Object.fromEntries(searchParams);
 
-    return () => {
-      document.removeEventListener("mouseup", handleClickOutside);
-    };
-  }, [activeId, dispatch]);
+      const keys = {
+        "По номеру": QueryParams.Number,
+        "По типу поставки": QueryParams.DeliveryType,
+        "По статусу": QueryParams.Status,
+        "По городу": QueryParams.City,
+      };
 
-  useEffect(() => {
-    return () => {
-      dispatch(setActiveId(null));
-    };
-  }, [dispatch]);
+      const currentKey =
+        keys[currentSearchItemRef.current as keyof typeof keys];
 
-  const [value, setValue] = useState("");
-  const searchValue = useDebounce(value);
+      if (currentKey) {
+        if (searchValue) {
+          params[currentKey] = searchValue;
+        } else {
+          delete params[currentKey];
+        }
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+        Object.values(keys).forEach((key) => {
+          if (key !== currentKey) {
+            delete params[key];
+          }
+        });
 
-  let currentSearchItem = "";
-  if (data && data.find((el) => el.selected)) {
-    currentSearchItem = data.find((el) => el.selected)!.text;
-  } else {
-    currentSearchItem = "";
-  }
-
-  useEffect(() => {
-    setValue("");
-  }, [currentSearchItem]);
-
-  useEffect(() => {
-    const params: Record<string, string> = {
-      ...Object.fromEntries(searchParams),
-    };
-
-    const keys: Record<string, string> = {
-      "По номеру": "number",
-      "По типу поставки": "deliveryType",
-      "По статусу": "status",
-      "По городу": "city",
-    };
-
-    const currentKey = keys[currentSearchItem as keyof typeof keys];
-
-    if (searchValue) {
-      params[currentKey] = searchValue;
-    } else {
-      delete params[currentKey];
-    }
-
-    Object.values(keys).forEach((key) => {
-      if (key !== currentKey) {
-        delete params[key];
+        setSearchParams(params);
       }
-    });
+    }, [searchParams, searchValue, setSearchParams]);
 
-    setSearchParams(params);
-  }, [currentSearchItem, searchParams, searchValue, setSearchParams]);
-
-  return (
-    <section className={style.productManagement}>
-      <Button onClick={openModal} className={style.addBtn}>
-        <img src={iconPlus} alt="icon to add shipment" />
-        <Txt className={style.info} text="Добавить поставку" />
-      </Button>
-      <form className={`${style.form}`}>
-        <Select
-          classNames={[styleNames.fourRows]}
-          data={data}
-          action={setTableSearch}
-        />
-        <Input onChange={onChange} value={value} />
-      </form>
-      {showModal &&
-        createPortal(<NewShipment onClose={handleCloseModal} />, document.body)}
-    </section>
-  );
-});
+    return (
+      <>
+        {isLoading ? (
+          <FetchingInfo message={`Загружаемся...`} />
+        ) : (
+          <section className={style.productManagement}>
+            <AddButton openModal={openModal}>
+              <Txt className={style.info} text="Добавить поставку" />
+            </AddButton>
+            <form className={`${style.form}`}>
+              <Select
+                classNames={[styleNames.fourRows]}
+                data={data || []}
+                action={setTableSearch}
+              />
+              <Input onChange={onChange} value={value} />
+            </form>
+          </section>
+        )}
+      </>
+    );
+  },
+);

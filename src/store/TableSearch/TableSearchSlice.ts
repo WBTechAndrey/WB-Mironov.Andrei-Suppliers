@@ -10,7 +10,7 @@ interface State {
   data: Search[];
 }
 
-const initialState: State = {
+export const initialState: State = {
   data: [
     { text: "По номеру", id: 1, selected: true },
     { text: "По городу", id: 2, selected: false },
@@ -31,9 +31,12 @@ const selectTableSearch = createSlice({
           : { ...item, selected: false },
       );
     },
+    setAllItems(state, action: PayloadAction<Search[]>) {
+      state.data = action.payload;
+    },
   },
 });
 
-export const { setTableSearch } = selectTableSearch.actions;
+export const { setTableSearch, setAllItems } = selectTableSearch.actions;
 
 export const selectTableSearchReducer = selectTableSearch.reducer;

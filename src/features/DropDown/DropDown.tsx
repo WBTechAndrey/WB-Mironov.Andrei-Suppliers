@@ -1,5 +1,5 @@
 import style from "./index.module.scss";
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import { ListItem } from "./ListItem";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { combinedClassNames } from "../../helpers/combinedClassNames";
@@ -20,6 +20,8 @@ interface DropDownProps {
   onClick: () => void;
   classNames: Array<string>;
   deleteShip?: () => void;
+  children?: ReactNode;
+  closeModal?: () => void;
 }
 
 export const DropDown: FC<DropDownProps> = ({
@@ -29,6 +31,8 @@ export const DropDown: FC<DropDownProps> = ({
   onClick,
   classNames,
   deleteShip,
+  children,
+  closeModal,
 }) => {
   const allClassNames = combinedClassNames(classNames, style);
 
@@ -39,14 +43,18 @@ export const DropDown: FC<DropDownProps> = ({
       action={action}
       onClick={onClick}
       deleteShip={deleteShip}
+      closeModal={closeModal}
     />
   ));
 
   return (
-    <div
-      className={`${style.menu} ${allClassNames} ${isActive ? "" : style.hidden}`.trim()}
-    >
-      <ul>{listItems}</ul>
-    </div>
+    <>
+      <div
+        className={`${style.menu} ${allClassNames} ${isActive ? "" : style.hidden}`.trim()}
+      >
+        {children ? children : null}
+        <ul>{listItems}</ul>
+      </div>
+    </>
   );
 };

@@ -1,20 +1,43 @@
 import style from "./index.module.scss";
 import { TableHeader } from "./TableHeader";
-import { TableRow } from "./TableRow";
-import { Shipment, testAPI } from "../../store/API/testApi";
 import { memo, useEffect, useState } from "react";
 import { FetchingInfo } from "../common/Loaders/FetchingInfo";
-import { SetURLSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Pagination } from "../Pagination/Pagination";
+import { Shipment, shipmentsAPI } from "../../store/API/shipmentsAPI";
+import { DesktopRow } from "./DesktopRow/DesktopRow";
+import { MobileRows } from "./MobileRows/MobileRows";
+import { useViewport } from "../../hooks/useViewport";
+import { PaginationMobile } from "../Pagination/PaginationMobile/PaginationMobile";
+import { QueryParams } from "../../types";
+import {
+  BASIC_WIDTH,
+  DEFAULT_PAGES_COUNT,
+  DEFAULT_START_PAGE,
+  MOBILE_WIDTH,
+  PAGE_LIMIT,
+} from "../../constants";
 
-interface TableProps {
-  searchParams: URLSearchParams;
-  setSearchParams: SetURLSearchParams;
-}
-
-export const Table = memo(({ searchParams, setSearchParams }: TableProps) => {
-  const [limit] = useState("9");
-  const [page, setPage] = useState(searchParams.get("page") || "1");
+export const Table = memo(() => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [limit] = useState(PAGE_LIMIT);
+  const [page, setPage] = useState(
+    searchParams.get(QueryParams.Page) || DEFAULT_START_PAGE,
+  );
+  const [viewport, setViewport] = useState(BASIC_WIDTH);
+  const { width } = useViewport();
+  useEffect(() => {
+    setViewport(width);
+  }, [viewport, width]);
+  const { data, isFetching, isLoading, error } =
+    shipmentsAPI.useGetShipmentsQuery({
+      page,
+      limit,
+      number: searchParams.get(QueryParams.Number),
+      city: searchParams.get(QueryParams.City),
+      deliveryType: searchParams.get(QueryParams.DeliveryType),
+      status: searchParams.get(QueryParams.Status),
+    });
 
   useEffect(() => {
     const pageParam = searchParams.get("page");
@@ -22,15 +45,6 @@ export const Table = memo(({ searchParams, setSearchParams }: TableProps) => {
       setPage(pageParam);
     }
   }, [searchParams]);
-
-  const { data, isFetching, isLoading, error } = testAPI.useGetShipmentsQuery({
-    page,
-    limit,
-    number: searchParams.get("number"),
-    city: searchParams.get("city"),
-    deliveryType: searchParams.get("deliveryType"),
-    status: searchParams.get("status"),
-  });
 
   useEffect(() => {
     if (data && data.totalPages && +data.totalPages < +page) {
@@ -46,27 +60,48 @@ export const Table = memo(({ searchParams, setSearchParams }: TableProps) => {
     });
   };
 
-  if (isLoading || isFetching) return <FetchingInfo message={`Loading...`} />;
-  if (error)
+  if (isLoading || isFetching) {
+    return <FetchingInfo message={`Loading...`} />;
+  }
+  if (error) {
     return <FetchingInfo message={`Упс... не удалось загрузить поставки`} />;
+  }
+
+  if (!data) {
+    return <FetchingInfo message={`Нет данных(`} />;
+  }
 
   return (
     <>
-      <Pagination
-        totalPages={data?.totalPages || 0}
-        currentPage={data?.currentPage || 1}
-        setCurrentPage={handlePageChange}
-      />
-      <main className={style.table}>
-        <TableHeader />
-        <article className={style.cards}>
-          {data
-            ? data.data.map((item: Shipment) => (
-                <TableRow key={item.id} item={item} />
-              ))
-            : ""}
-        </article>
-      </main>
+      {viewport <= MOBILE_WIDTH ? (
+        <>
+          <main className={style.mobileTable}>
+            {data.data.map((item: Shipment) => (
+              <MobileRows key={item.id} item={item} />
+            ))}
+            <PaginationMobile
+              totalPages={data.totalPages || DEFAULT_PAGES_COUNT}
+              currentPage={data.currentPage || +DEFAULT_START_PAGE}
+            />
+          </main>
+        </>
+      ) : (
+        <>
+          <Pagination
+            totalPages={data.totalPages || DEFAULT_PAGES_COUNT}
+            currentPage={data.currentPage || +DEFAULT_START_PAGE}
+            setCurrentPage={handlePageChange}
+          />
+          <main className={style.table}>
+            <TableHeader />
+            <article className={style.cards}>
+              {data.data.map((item: Shipment) => (
+                <DesktopRow key={item.id} item={item} />
+              ))}
+            </article>
+          </main>
+        </>
+      )}
     </>
   );
 });

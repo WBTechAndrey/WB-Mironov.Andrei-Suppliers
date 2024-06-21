@@ -1,0 +1,8 @@
+@import "../../../styles/mixins";
+
+.page {
+  position: absolute;
+  bottom: -17px;
+  @include ellipsis;
+  font-size: var(--basic-font-size);
+}

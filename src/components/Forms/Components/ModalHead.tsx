@@ -6,7 +6,7 @@ import closeIcon from "../../../assets/icons/close-icon.svg";
 import React, { FC, memo } from "react";
 
 interface FooterProps {
-  onClose: (arg: boolean) => void;
+  onClose: (value: boolean) => void;
   number: string;
   title: string;
 }

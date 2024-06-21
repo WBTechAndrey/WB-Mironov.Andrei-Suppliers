@@ -1,3 +1,5 @@
+@import "styles/fonts.css";
+
 :root {
   --gray: #2D2C32;
   --white-gray: #4c4c51;
@@ -22,159 +24,47 @@
 
   --hover-items: #5f5e63;
 
+  --mobile-line-bg: #424146;
+
   --basic-border: 10px;
   --medium-border: 14px;
-  --mini-border: 5px;
+  --mini-border: 6px;
   --big-border: 16px;
 
   --calendar-border: rgba(240, 240, 243, 0.9);
   --calendar-selected: #E4EAFF;
 
+  --small-font-size: 11px;
   --light-font-size: 13px;
+  --medium-font-size: 14px;
   --basic-font-size: 16px;
 
   --portals-font-family-hauss: "WB Hauss", sans-serif
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss VF;
-  font-weight: 1 850;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/als-hauss-vf.b709e7bab16d4dd7d164.ttf) format("truetype-variations")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 1;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-hairline.8647c2746e374e22d86d.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 1;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-hairline-italic.0101383b9b2d838885a2.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 100;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-thin.186e3df1a3fd7c9da049.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 100;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-thin-italic.4d29c800d08cab0a14ef.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 200;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-light.0bc7ad383f520c537000.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 200;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-light-italic.2ad946ca38bfec244789.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 300;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-book.a223cb788bd7980a5410.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 300;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-book-italic.0f9bd1ae96e6f8b0c5ba.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-regular.e0b0d410abe3ff1c9dd6.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 400;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-regular-italic.4d98e1e42425d220da92.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 500;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-medium.f7fb80e5b276629c94fb.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 500;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-medium-italic.cd9a6f3453d183207d39.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 700;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-bold.f801d610414238176151.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 700;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-bold-italic.f0150bb362e32a4bc8aa.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: normal;
-  font-weight: 800;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-black.74f97b9157442e6b030e.woff2) format("woff2")
-}
-
-@font-face {
-  font-display: swap;
-  font-family: WB Hauss;
-  font-style: italic;
-  font-weight: 800;
-  src: url(https://static-basket-02.wbbasket.ru/vol20/portal-fonts/latest/assets/hauss-black-italic.1da75ae84037a59e24dc.woff2) format("woff2")
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-size: larger;
+}
+
+body {
+  background: var(--gray);
+  padding: 24px 24px 0 116px;
+  color: var(--white);
+  &.no-scroll {
+    overflow: hidden;
+    &:before {
+      content: none;
+    }
+  }
 }
 
 button {
@@ -208,11 +98,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
 input, textarea, select, button {
   font: inherit;
   color: inherit;
@@ -227,21 +112,8 @@ input[type="search"]::-webkit-search-cancel-button {
   appearance: none;
 }
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  font-size: larger;
-}
-
 html {
   font-family: var(--portals-font-family-hauss), sans-serif;
-}
-
-body {
-  background: var(--gray);
-  padding: 24px 24px 0 116px;
-  color: var(--white)
 }
 
 .logo {
@@ -262,4 +134,53 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+@media screen and (width <= 900px) {
+  body {
+    padding: 16px;
+  }
+
+  .logo {
+    position: absolute;
+    left: inherit;
+    right: 18px;
+    top: 16px;
+  }
+}
+
+@media screen and (width <= 600px) {
+  body {
+    padding: 0 16px;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 25px;
+      background-image: linear-gradient(rgba(99, 102, 241, 0.25) 7.75%, rgba(99, 102, 241, 0) 32.76%);
+      background-size: 100vw 60px;
+      background-repeat: no-repeat;
+      transform: rotate(-1deg);
+      transform-origin: left;
+      z-index: -2;
+    }
+    &.mobile {
+      background-color: rgba(0, 0, 0, 0.64);
+    }
+  }
+
+  .activeItem {
+    background: unset;
+    position: relative;
+  }
+
+  .logo {
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    top: 19px;
+    width: 38px;
+  }
 }

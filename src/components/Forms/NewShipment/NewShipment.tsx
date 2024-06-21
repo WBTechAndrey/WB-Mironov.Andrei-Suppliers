@@ -23,13 +23,13 @@ import {
 } from "../../../store/AddShip/selectors";
 import { useSelector } from "react-redux";
 import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
-import { testAPI } from "../../../store/API/testApi";
+import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
 import { ShipmentForm } from "../ShipmentForm";
 import { ShipmentModal } from "../ShipmentModal";
 import { Actions } from "../../../types";
 
 interface NewShipmentProps {
-  onClose: (arg: boolean) => void;
+  onClose: () => void;
 }
 
 export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
@@ -39,8 +39,7 @@ export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
   const deliveryDate = useSelector(selectDeliveryDate);
   const number = useSelector(selectNumber);
   const [createPost, { isLoading, isSuccess }] =
-    testAPI.usePostShipmentsMutation();
-
+    shipmentsAPI.usePostShipmentsMutation();
   const cities = useSelector(selectCities);
   const quantity = useSelector(selectQuantity);
   const type = useSelector(selectDeliveryType);
@@ -61,13 +60,21 @@ export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
     isLoading: isLoadingInit,
     isError: isErrorInit,
     error: errorInit,
-  } = testAPI.useGetInfoToAddShipQuery("", {
+  } = shipmentsAPI.useGetInfoToAddShipQuery("", {
     refetchOnMountOrArgChange: true,
   });
 
   useEffect(() => {
     dispatch(setAll(data));
+
+    return () => {
+      dispatch(setActiveId(null));
+    };
   }, [data, dispatch]);
+
+  useEffect(() => {
+    if (isSuccess) onClose();
+  }, [isSuccess, onClose]);
 
   const setOpened = useCallback(() => {
     if (activeId === "calendar") {
@@ -89,7 +96,7 @@ export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
       number={number}
       title="Новая поставка"
       formId="new-shipment-form"
-      footerProps={{ createPost, isLoading, isSuccess, onClose }}
+      footerProps={{ createPost, isLoading, onClose }}
       setOpened={setOpened}
       quantity={quantity}
       formProps={{

@@ -2,15 +2,13 @@ import { Button } from "../common/Button";
 import style from "./index.module.scss";
 import logo from "../../assets/wb.svg";
 import React, { useState } from "react";
+import doc from "../../assets/icons/mobile/doc.svg";
+import burger from "../../assets/icons/mobile/burger-burger.svg";
+import refresh from "../../assets/icons/mobile/refresh.svg";
+import { navRows } from "../../constants";
 
 export const Nav = () => {
-  const [buttonsData, setButtonsData] = useState([
-    { text: "Поставки", isActive: true },
-    { text: "Товары", isActive: false },
-    { text: "Цены и скидки", isActive: false },
-    { text: "Аналитика", isActive: false },
-    { text: "Реклама", isActive: false },
-  ]);
+  const [buttonsData, setButtonsData] = useState(navRows);
 
   const handleButtonClick = (text: string) => {
     setButtonsData(
@@ -23,7 +21,7 @@ export const Nav = () => {
   };
 
   return (
-    <>
+    <section className={style.navbar}>
       <a href="https://seller.wildberries.ru/" target="_blank" rel="noreferrer">
         <img className="logo" src={logo} alt="logo" />
       </a>
@@ -37,6 +35,19 @@ export const Nav = () => {
           />
         ))}
       </nav>
-    </>
+      <aside className={style.aside}>
+        <Button onClick={() => {}}>
+          <img src={burger} alt="" />
+        </Button>
+        <div>
+          <Button onClick={() => {}}>
+            <img src={refresh} alt="" />
+          </Button>
+          <Button onClick={() => {}}>
+            <img src={doc} alt="" />
+          </Button>
+        </div>
+      </aside>
+    </section>
   );
 };

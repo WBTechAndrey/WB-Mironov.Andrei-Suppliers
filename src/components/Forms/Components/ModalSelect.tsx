@@ -14,7 +14,12 @@ interface SelectFieldProps<T, A extends string> {
 export const ModalSelect: FC<SelectFieldProps<DropDownState, string>> = memo(
   ({ label, data, action, classNames }) => (
     <ModalField label={label} className="container">
-      <Select data={data} action={action} classNames={classNames} />
+      <Select
+        data={data}
+        action={action}
+        classNames={classNames}
+        label={label}
+      />
     </ModalField>
   ),
 );

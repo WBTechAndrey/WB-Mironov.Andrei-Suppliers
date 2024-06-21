@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DropDownState, EditShipState } from "../../types";
 
-export type EditShipSlice = Omit<EditShipState, "deliveryDate">;
-
 const initialState: Omit<EditShipState, "deliveryDate"> = {
   number: "",
   id: "",

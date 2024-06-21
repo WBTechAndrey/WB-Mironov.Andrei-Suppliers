@@ -1,6 +1,9 @@
 .productManagement {
   display: flex;
   gap: 24px;
+  @media screen and (width < 800px) {
+    gap: 5px;
+  }
 }
 
 .addBtn {
@@ -13,12 +16,15 @@
   &:hover {
     background: var(--white-gray);
   }
+  @media screen and (width <= 600px) {
+    padding: 6px;
+  }
 }
 
 .info {
   font-size: 0.85rem;
   font-weight: 400;
-  @media screen and (width < 376px) {
+  @media screen and (width < 800px) {
     display: none;
   }
 }

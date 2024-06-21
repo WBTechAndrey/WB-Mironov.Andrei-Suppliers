@@ -11,13 +11,13 @@
 }
 
 .btn {
-  width: 60px;
+  width: 40px;
   cursor: pointer;
   background-color: var(--contrast-gray);
   color: var(--white);
   transition: var(--transition-all);
-  font-size: var(--basic-font-size);
-  height: 20px;
+  font-size: var(--light-font-size);
+  height: 15px;
   border-radius: var(--mini-border);
     &:hover {
       background: var(--white-gray);

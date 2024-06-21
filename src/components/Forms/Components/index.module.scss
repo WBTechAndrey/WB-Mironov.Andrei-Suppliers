@@ -35,7 +35,7 @@
   column-gap: 20px;
   font-size: var(--basic-font-size);
   font-weight: 500;
-  padding-top: 15px;
+  transform: translateY(-18px);
 }
 
 .sendBtn {
@@ -43,8 +43,8 @@
   display: grid;
   place-content: center;
   height: 36px;
-  padding: 10px;
-  border-radius: var(--basic-border);
+  padding: 10px 8px 10px 8px;
+  border-radius: 9px;
 }
 
 .disabled {
@@ -52,6 +52,25 @@
   user-select: none;
 }
 
-.sendBtnEdit {
-
+@media screen and (width <= 600px) {
+  .title {
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .shipId {
+    font-size: var(--medium-font-size);
+    color: var(--text-puprle-gray);
+  }
+  .header {
+    padding-bottom: 38px;
+  }
+  .footer{
+    padding-top: 0;
+  }
+  .sendBtn {
+    width: 100%;
+  }
+  .rollbackBtn {
+    display: none;
+  }
 }

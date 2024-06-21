@@ -13,6 +13,30 @@ export interface DropDownState {
   selected: boolean;
 }
 
+export enum QueryParams {
+  Number = "number",
+  City = "city",
+  DeliveryType = "deliveryType",
+  Status = "status",
+  Page = "page",
+}
+
+export interface Warehouse {
+  name: string;
+  address: string;
+}
+
+export interface Item {
+  id: number;
+  number: string;
+  deliveryDate: string;
+  city: string;
+  quantity: string;
+  deliveryType: string;
+  warehouse: Warehouse;
+  status: string;
+}
+
 export interface AddShipState {
   number: string;
   deliveryDate: string;
@@ -34,9 +58,8 @@ export interface FooterPropsData {
     data: Omit<EditShipState, "deliveryDate">;
   }) => void;
   target?: string;
-  isSuccess: boolean;
-  isLoading?: boolean;
-  onClose: (arg: boolean) => void;
+  isLoading: boolean;
+  onClose: (value: boolean) => void;
 }
 
 export interface FormPropsData {
@@ -53,6 +76,13 @@ export type Actions = {
   setStatus: ActionCreatorWithPayload<number>;
   setQuantity: ActionCreatorWithPayload<string>;
 };
+
+export interface TableRowProps {
+  item: Item;
+  activeId: string;
+  setActiveId: (id: string) => void;
+  openModal: () => void;
+}
 
 // React Hook Forms
 export type Inputs = {

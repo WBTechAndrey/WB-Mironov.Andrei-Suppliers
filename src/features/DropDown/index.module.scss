@@ -18,6 +18,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+
     li {
       flex-grow: 1;
       display: flex;
@@ -25,6 +26,7 @@
       padding-left: 10px;
       cursor: pointer;
       font-size: 0.75em;
+
       &:hover {
         background: var(--white-hover);
       }
@@ -37,22 +39,71 @@
 }
 
 .fourRows {
-  @include rows(4, 192, 0)
+  @include rows(4, 192, 0, 44px);
 }
 
 .fiveRows {
-  @include rows(5, 400, 0);
+  @include rows(5, 400, 0, 44px);
 }
 
 .twoRows {
-  @include rows(2, 400, 0);
+  @include rows(2, 400, 0, 44px);
 }
 
 .twoRowsOnTable {
-  @include rows(2, 140, -98);
+  @include rows(2, 140, -98, 44px);
   top: 60px;
 }
 
 .threeRows {
-  @include rows(3, 400, 0);
+  @include rows(3, 400, 0, 44px);
+}
+
+@media screen and (width <= 600px) {
+  .fourRows {
+    @include rows(4, 192, 0, 45px);
+  }
+
+  .fiveRows {
+    @include rows(6, 400, 0, 50px);
+  }
+
+  .twoRows {
+    @include rows(3, 400, 0, 60px);
+  }
+
+  .twoRowsOnTable {
+    @include rows(2, 140, -98, 45px);
+    top: 60px;
+  }
+
+  .threeRows {
+    @include rows(6, 400, 0, 50px);
+  }
+  .menu {
+    background-color: var(--gray);
+    color: var(--white);
+    position: absolute;
+    top: unset;
+    bottom: 0;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+
+
+
+    ul {
+      li {
+        padding-left: 16px;
+        font-size: 16px;
+        &:hover {
+          background-color: unset;
+        }
+      }
+    }
+  }
+
+  .icon {
+    position: absolute;
+    right: 10px;
+  }
 }

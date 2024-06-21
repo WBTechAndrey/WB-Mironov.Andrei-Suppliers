@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { testAPI } from "../../../store/API/testApi";
+import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
 import {
   setAll,
   setCity,
@@ -19,11 +19,8 @@ import {
 } from "../../../store/EditShip/selectors";
 import { ShipmentModal } from "../ShipmentModal";
 import { ShipmentForm } from "../ShipmentForm";
-
-interface EditShipmentProps {
-  onClose: () => void;
-  activeId: string;
-}
+import { FetchingInfo } from "../../common/Loaders/FetchingInfo";
+import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
 
 interface EditShipmentProps {
   onClose: () => void;
@@ -31,16 +28,25 @@ interface EditShipmentProps {
 }
 
 export const EditShipment: FC<EditShipmentProps> = ({ onClose, activeId }) => {
-  const { data } = testAPI.useGetShipmentByIdQuery(activeId, {
+  const { data } = shipmentsAPI.useGetShipmentByIdQuery(activeId, {
     refetchOnMountOrArgChange: true,
   });
-  const [updateData, { isSuccess }] = testAPI.useUpdateShipmentMutation();
-
+  const [updateData, { isSuccess, isLoading }] =
+    shipmentsAPI.useUpdateShipmentMutation();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setAll(data));
+    dispatch(setActiveId(null));
+
+    return () => {
+      dispatch(setActiveId(null));
+    };
   }, [data, dispatch]);
+
+  useEffect(() => {
+    if (isSuccess) onClose();
+  }, [isSuccess, onClose]);
 
   const cities = useSelector(selectEditCities);
   const deliveryType = useSelector(selectEditDeliveryType);
@@ -57,27 +63,33 @@ export const EditShipment: FC<EditShipmentProps> = ({ onClose, activeId }) => {
   };
 
   return (
-    <ShipmentModal
-      number={data ? data.number : ""}
-      title="Редактирование"
-      formId="edit-shipment-form"
-      quantity={quantity}
-      footerProps={{
-        updateShip: updateData,
-        target: "edit",
-        isSuccess,
-        onClose,
-      }}
-      componentToRender={
-        <ShipmentForm
-          target="edit"
-          warehouse={warehouse}
-          status={status}
-          cities={cities}
-          type={deliveryType}
-          actions={actions}
-        />
-      }
-    ></ShipmentModal>
+    <>
+      {isLoading ? (
+        <FetchingInfo message={"Подгружаемся..."} />
+      ) : (
+        <ShipmentModal
+          number={data ? data.number : ""}
+          title="Редактирование"
+          formId="edit-shipment-form"
+          quantity={quantity}
+          footerProps={{
+            updateShip: updateData,
+            target: "edit",
+            isLoading,
+            onClose,
+          }}
+          componentToRender={
+            <ShipmentForm
+              target="edit"
+              warehouse={warehouse}
+              status={status}
+              cities={cities}
+              type={deliveryType}
+              actions={actions}
+            />
+          }
+        ></ShipmentModal>
+      )}
+    </>
   );
 };

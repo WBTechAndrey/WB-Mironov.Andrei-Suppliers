@@ -194,24 +194,6 @@ export const getInfoToAddShip = (req, res) => {
   res.status(200).json(data.infoToAddShip);
 };
 
-// export const getShipments = (req, res) => {
-//   const page = parseInt(req.query.page) || 1;
-//   const limit = parseInt(req.query.limit) || 10;
-//
-//   const startIndex = (page - 1) * limit;
-//   const endIndex = page * limit;
-//
-//   const resultShipments = data.shipments.slice(startIndex, endIndex);
-//
-//   const totalPages = Math.ceil(data.shipments.length / limit);
-//
-//   res.status(200).json({
-//     currentPage: page,
-//     totalPages: totalPages,
-//     data: resultShipments,
-//   });
-// };
-
 export const getShipments = (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -260,6 +242,47 @@ export const getShipments = (req, res) => {
     totalShipments: total,
     data: resultShipments,
   });
+};
+
+export const getSearchInfoParams = (req, res) => {
+  const { number, city, deliveryType, status } = req.query;
+  const updatedData = data.searchData;
+
+  const queryParamsToText = {
+    number: "По номеру",
+    city: "По городу",
+    deliveryType: "По типу поставки",
+    status: "По статусу",
+  };
+
+  let activeParam = null;
+  if (number) {
+    activeParam = "number";
+  } else if (city) {
+    activeParam = "city";
+  } else if (deliveryType) {
+    activeParam = "deliveryType";
+  } else if (status) {
+    activeParam = "status";
+  }
+
+  let matchFound = false;
+  updatedData.forEach((item) => {
+    if (activeParam && item.text === queryParamsToText[activeParam]) {
+      item.selected = true;
+      matchFound = true;
+    } else {
+      item.selected = false;
+    }
+  });
+
+  if (!matchFound) {
+    if (updatedData.length > 0) {
+      updatedData[0].selected = true;
+    }
+  }
+
+  res.status(200).json(data.searchData);
 };
 
 export const removeData = (req, res) => {

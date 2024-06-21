@@ -1,0 +1,27 @@
+.containerBack,
+.containerForward {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-content: center;
+  position: fixed;
+  bottom: 15px;
+  border-radius: var(--medium-border);
+
+  &:active {
+    background-color: var(--whitest-gray);
+  }
+}
+
+.containerBack {
+  left: 5px;
+}
+
+.containerForward {
+  right: 5px;
+}
+
+.back, .forward {
+  width: 13px;
+}
+

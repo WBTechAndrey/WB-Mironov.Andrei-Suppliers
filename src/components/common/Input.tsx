@@ -3,7 +3,7 @@ import search from "../../assets/icons/icon-search.svg";
 import React, { FC, memo } from "react";
 
 interface InputProps {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
   value: string;
 }
 
@@ -16,7 +16,7 @@ export const Input: FC<InputProps> = memo(({ onChange, value }) => {
         name="items-search"
         placeholder="Поиск..."
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.value)}
       />
       <img src={search} alt="search icon" className={style.searchIcon} />
     </>

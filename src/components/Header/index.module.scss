@@ -4,6 +4,9 @@
   justify-content: space-between;
   gap: 20px;
   padding-top: 23px;
+  img {
+    min-width: 10px;
+  }
 }
 
 .title {
@@ -24,3 +27,8 @@
   padding-right: 12px;
 }
 
+@media screen and (width <= 600px) {
+  .header {
+    position: relative;
+  }
+}
