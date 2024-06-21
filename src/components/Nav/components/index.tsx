@@ -13,6 +13,7 @@ export const NavButtons: FC<{
       {buttonsData.map((button, index) => (
         <NavLink
           key={index}
+          id={String(index)}
           onClick={() => handleButtonClick(button.text)}
           to={`/${button.text}`}
           className={({ isActive, isPending }) =>

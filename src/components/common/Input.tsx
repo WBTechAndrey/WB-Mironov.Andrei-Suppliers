@@ -15,6 +15,7 @@ export const Input: FC<InputProps> = memo(({ onChange, value }) => {
         type="search"
         name="items-search"
         placeholder="Поиск..."
+        autoComplete="off"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />

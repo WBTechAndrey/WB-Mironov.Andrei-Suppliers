@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect } from "react";
-import { QueryParams } from "types";
+import { QueryParams, SearchValues } from "enums";
 
 const useSearchParamsUpdater = (
   searchParams: URLSearchParams,
@@ -11,10 +11,10 @@ const useSearchParamsUpdater = (
     const params = Object.fromEntries(searchParams);
 
     const keys = {
-      "По номеру": QueryParams.Number,
-      "По типу поставки": QueryParams.DeliveryType,
-      "По статусу": QueryParams.Status,
-      "По городу": QueryParams.City,
+      [SearchValues.Number]: QueryParams.Number,
+      [SearchValues.DeliveryType]: QueryParams.DeliveryType,
+      [SearchValues.Status]: QueryParams.Status,
+      [SearchValues.City]: QueryParams.City,
     };
 
     const currentKey = keys[currentSearchItemRef.current as keyof typeof keys];

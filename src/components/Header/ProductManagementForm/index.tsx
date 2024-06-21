@@ -17,7 +17,7 @@ import { useSearchParams } from "react-router-dom";
 import { shipmentsAPI } from "store/API/shipmentsAPI";
 import { FetchingInfo } from "components/common/Loaders/FetchingInfo";
 import { AddButton } from "components/Header/ProductManagementForm/components/AddButton";
-import { QueryParams } from "types";
+import { QueryParams, SearchValues } from "enums";
 import useClickOutside from "hooks/useClickOutside";
 import useSearchParamsUpdater from "hooks/useSearchParamsUpdater";
 
@@ -56,9 +56,39 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
 
     useClickOutside(activeId, dispatch);
 
+    const [isData, setIsData] = useState(false);
+
     useEffect(() => {
-      if (serverData) dispatch(setAllItems(serverData));
-    }, [dispatch, serverData]);
+      switch (activeId) {
+        case SearchValues.Number: {
+          dispatch(setTableSearch(1));
+          setIsData(true);
+          break;
+        }
+        case SearchValues.City: {
+          dispatch(setTableSearch(2));
+          setIsData(true);
+          break;
+        }
+        case SearchValues.DeliveryType: {
+          dispatch(setTableSearch(3));
+          setIsData(true);
+          break;
+        }
+        case SearchValues.Status: {
+          dispatch(setTableSearch(4));
+          setIsData(true);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }, [activeId, dispatch]);
+
+    useEffect(() => {
+      if (serverData && !isData) dispatch(setAllItems(serverData));
+    }, [dispatch, isData, serverData]);
 
     useEffect(() => {
       if (data && !isLoading) {

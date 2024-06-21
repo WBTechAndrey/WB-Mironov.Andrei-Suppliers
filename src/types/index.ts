@@ -13,14 +13,6 @@ export interface DropDownState {
   selected: boolean;
 }
 
-export enum QueryParams {
-  Number = "number",
-  City = "city",
-  DeliveryType = "deliveryType",
-  Status = "status",
-  Page = "page",
-}
-
 export interface Warehouse {
   name: string;
   address: string;

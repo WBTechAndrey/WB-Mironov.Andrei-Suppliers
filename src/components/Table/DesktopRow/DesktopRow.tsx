@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useState } from "react";
 import style from "../index.module.scss";
 import ellipsis from "../../../assets/icons/ellipsis.svg";
 import { Txt } from "components/common/Txt";
@@ -12,6 +12,7 @@ import { useAppDispatch } from "hooks/redux/redux";
 import { useSelector } from "react-redux";
 import { selectActiveId } from "store/OpenDropDownMenu/selectors";
 import { DesktopRowData } from "../../../constants";
+import { useModal } from "hooks/useModal";
 
 interface Warehouse {
   name: string;
@@ -44,15 +45,12 @@ export const DesktopRow: FC<DesktopRowProps> = ({ item }) => {
     "deliveryType",
   ];
 
-  const [showModal, setShowModal] = useState(false);
   const [activeIdLocal, setActiveIdLocal] = useState("");
 
   const [deleteData, { isLoading }] =
     shipmentsAPI.useDeleteShipmentByIdMutation();
 
-  const toggleShowModal = useCallback(() => {
-    setShowModal((prev) => !prev);
-  }, []);
+  const { isModalShow, openModal, closeModal } = useModal();
 
   const deleteDataFunc = () => {
     deleteData(activeIdLocal);
@@ -124,16 +122,16 @@ export const DesktopRow: FC<DesktopRowProps> = ({ item }) => {
             <DropDown
               data={DesktopRowData}
               isActive={isActive}
-              onClick={toggleShowModal}
+              onClick={openModal}
               deleteShip={deleteDataFunc}
               classNames={[styleNames.twoRowsOnTable]}
             />
           </span>
         </li>
       </ul>
-      {showModal &&
+      {isModalShow &&
         createPortal(
-          <EditShipment onClose={toggleShowModal} activeId={activeIdLocal} />,
+          <EditShipment onClose={closeModal} activeId={activeIdLocal} />,
           document.body,
         )}
     </>

@@ -31,7 +31,7 @@ export const EditShipment: FC<EditShipmentProps> = ({ onClose, activeId }) => {
   const { data } = shipmentsAPI.useGetShipmentByIdQuery(activeId, {
     refetchOnMountOrArgChange: true,
   });
-  const [updateData, { isSuccess, isLoading }] =
+  const [updateData, { isSuccess, isLoading, isError }] =
     shipmentsAPI.useUpdateShipmentMutation();
   const dispatch = useAppDispatch();
 
@@ -61,6 +61,10 @@ export const EditShipment: FC<EditShipmentProps> = ({ onClose, activeId }) => {
     setWarehouse,
     setStatus,
   };
+
+  if (isError) {
+    return <FetchingInfo message={`Упс, произошла ошибка(`} />;
+  }
 
   return (
     <>

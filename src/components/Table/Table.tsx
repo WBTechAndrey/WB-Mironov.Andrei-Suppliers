@@ -8,7 +8,6 @@ import { Shipment, shipmentsAPI } from "store/API/shipmentsAPI";
 import { DesktopRow } from "./DesktopRow/DesktopRow";
 import { MobileRows } from "./MobileRows/MobileRows";
 import { PaginationMobile } from "components/Pagination/PaginationMobile";
-import { QueryParams } from "types";
 import {
   BASIC_WIDTH,
   DEFAULT_PAGES_COUNT,
@@ -17,6 +16,7 @@ import {
   PAGE_LIMIT,
 } from "../../constants";
 import { useResponsiveViewport } from "hooks/useResponsiveViewport";
+import { QueryParams } from "enums";
 
 export const Table = memo(() => {
   const [searchParams, setSearchParams] = useSearchParams();

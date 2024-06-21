@@ -33,8 +33,8 @@
 }
 
 .info {
-  font-size: 0.85rem;
-  font-weight: 400;
+  font-size: var(--basic-font-size);
+  font-weight: 500;
   @media screen and (width < 800px) {
     display: none;
   }

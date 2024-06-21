@@ -28,8 +28,9 @@ export const Nav = () => {
   const { isModalShow, openModal, closeModal } = useModal();
 
   const closePortal = (e: React.MouseEvent) => {
+    const allowedIds = ["burger", "0", "1", "2", "3", "4"];
     const target = e.target as HTMLDivElement;
-    if (target.id === "burger") {
+    if (allowedIds.includes(target.id)) {
       closeModal();
     }
   };
