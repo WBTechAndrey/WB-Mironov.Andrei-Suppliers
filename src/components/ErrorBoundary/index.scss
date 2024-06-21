@@ -1,0 +1,32 @@
+.something-wrong__title,
+.something-wrong {
+  grid-column: 1 / 3;
+  place-self: center;
+}
+
+.something-wrong__title {
+  grid-row: 1 / 2;
+}
+
+.something-wrong {
+  grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 50px;
+
+  &__info:first-child {
+    align-self: start;
+  }
+
+  &__info:nth-child(3) {
+    align-self: end;
+  }
+
+  &__btn {
+    align-self: center;
+    width: 100px;
+    height: 40px;
+    box-shadow: 0 0 10px white;
+  }
+}

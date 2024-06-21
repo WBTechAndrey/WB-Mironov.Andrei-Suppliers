@@ -1,0 +1,76 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 42px;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.shipId {
+  font-size: var(--basic-font-size);
+  color: var(--text-puprle-gray);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  right: 14px;
+  top: 14px;
+
+  img {
+    width: 16px;
+  }
+}
+
+.footer {
+  display: flex;
+  column-gap: 20px;
+  font-size: var(--basic-font-size);
+  font-weight: 500;
+  transform: translateY(-18px);
+}
+
+.sendBtn {
+  background-color: var(--button-bg);
+  display: grid;
+  place-content: center;
+  height: 36px;
+  padding: 10px 8px 10px 8px;
+  border-radius: 9px;
+}
+
+.disabled {
+  background-color: var(--button-bg-disabled);
+  user-select: none;
+}
+
+@media screen and (width <= 600px) {
+  .title {
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .shipId {
+    font-size: var(--medium-font-size);
+    color: var(--text-puprle-gray);
+  }
+  .header {
+    padding-bottom: 38px;
+  }
+  .footer{
+    padding-top: 0;
+  }
+  .sendBtn {
+    width: 100%;
+  }
+  .rollbackBtn {
+    display: none;
+  }
+}

@@ -1,0 +1,242 @@
+@import 'styles/mixins';
+
+.table > section {
+  display: grid;
+  border-collapse: collapse;
+  grid-template-columns:
+          minmax(80px, 113px)
+          minmax(110px, 0.9fr)
+          minmax(100px, 1.2fr)
+          minmax(100px, 1.05fr)
+          minmax(100px, 1.02fr)
+          minmax(110px, 2.7fr)
+          minmax(95px, 0.76fr)
+          minmax(40px, 40px);
+  grid-template-rows: 30px;
+  grid-auto-rows: 72px;
+  font-size: var(--basic-font-size);
+  row-gap: 4px;
+}
+
+.mobileTable {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 24px;
+}
+
+
+@media screen and (width < 800px) {
+  .table > section {
+    grid-template-columns:
+          minmax(80px, 80px)
+          minmax(80px, 1fr)
+          minmax(60px, 1fr)
+          minmax(70px, 1fr)
+          minmax(80px, 1fr)
+          minmax(100px, 1fr)
+          minmax(20px, 46px)
+          minmax(40px, 40px);
+  }
+
+  .headItem {
+    span {
+      max-width: 75px;
+      @include ellipsis;
+    }
+
+    &:nth-child(2) {
+      span {
+        max-width: 60px;
+      }
+    }
+
+    &:nth-child(4) {
+      span {
+        max-width: 60px;
+      }
+    }
+  }
+}
+
+.table .list:hover .item {
+  & ~ ul {
+    background-color: var(--hover-items);
+  }
+
+  background-color: var(--hover-items);
+}
+
+@media (hover: none) {
+  .table .list:hover .item {
+    & ~ ul {
+      background-color: var(--contrast-gray);
+    }
+
+    background-color: var(--contrast-gray);
+  }
+
+  .table .list:active .item {
+    & ~ ul {
+      background-color: var(--hover-items);
+    }
+
+    background-color: var(--hover-items);
+  }
+}
+
+.header,
+.cards,
+.list {
+  display: contents;
+}
+
+@media screen and (width <= 600px) {
+
+  .table {
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    display: none;
+  }
+
+  .list {
+    display: flex;
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.headItem {
+  font-size: var(--light-font-size);
+  display: grid;
+  align-content: center;
+  span {
+    padding-bottom: 5px;
+  }
+
+  &:last-child span {
+    visibility: hidden;
+  }
+
+  &:first-child span {
+    padding-left: 12px;
+  }
+}
+
+.item {
+  color: var(--white);
+  background-color: var(--contrast-gray);
+  position: relative;
+
+  & > span:first-child {
+    @include ellipsis;
+  }
+}
+
+.list {
+  & .item {
+    color: var(--white);
+    display: grid;
+    align-content: center;
+    padding-right: 11px;
+
+    @include status(93px, 50px, 18px, 11px);
+  }
+
+  & > .item {
+    &:first-child {
+      border-top-left-radius: var(--medium-border);
+      border-bottom-left-radius: var(--medium-border);
+      padding-left: 12px;
+      padding-right: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--medium-border);
+      border-bottom-right-radius: var(--medium-border);
+      padding-right: 0;
+    }
+  }
+
+  @include transform-position(2, -1px);
+  @include transform-position(3, -2px);
+  @include transform-position(4, -3px);
+  @include transform-position(5, -4px);
+  @include transform-position(6, -5px);
+  @include transform-position(7, -6px);
+  @include transform-position(8, -7px);
+
+  & > ul {
+    background-color: var(--contrast-gray);
+
+    & .item:last-child {
+      color: var(--text-gray);
+      font-size: var(--light-font-size);
+    }
+
+
+    & .item:first-child {
+      padding-top: 9px;
+    }
+
+    li {
+      height: 50%;
+    }
+  }
+
+  & > li:last-child {
+    justify-content: center;
+    position: relative;
+
+    span {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-content: center;
+      border-radius: var(--basic-border);
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--whitest-gray);
+      }
+
+      @media (hover: none) {
+        &:hover {
+          background-color: unset;
+        }
+        &:active {
+          background-color: var(--whitest-gray);
+        }
+      }
+    }
+  }
+}
+
+.tooltiptext {
+  visibility: hidden;
+  background-color: var(--gray);
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+@media (hover: none) {
+  .tooltip:hover .tooltiptext {
+    visibility: hidden;
+  }
+  .tooltip:active .tooltiptext {
+    visibility: visible;
+  }
+}

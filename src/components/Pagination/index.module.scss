@@ -1,0 +1,42 @@
+.paginationButtons {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  max-width: 100%;
+  width: 100%;
+  height: 20px;
+  border-radius: var(--basic-border);
+  padding: 15px 0;
+}
+
+.btn {
+  width: 40px;
+  cursor: pointer;
+  background-color: var(--contrast-gray);
+  color: var(--white);
+  transition: var(--transition-all);
+  font-size: var(--light-font-size);
+  height: 15px;
+  border-radius: var(--mini-border);
+
+  &:hover {
+    background: var(--white-gray);
+  }
+
+  @media (hover: none) {
+    &:hover {
+      background: unset;
+    }
+    &:active {
+      background: var(--white-gray);
+    }
+  }
+
+
+  &:disabled {
+    color: var(--gray);
+    background: var(--white);
+
+  }
+}

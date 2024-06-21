@@ -1,0 +1,56 @@
+.productManagement {
+  display: flex;
+  gap: 24px;
+  @media screen and (width < 800px) {
+    gap: 5px;
+  }
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 8px 5px 5px;
+  border-radius: var(--medium-border);
+
+  &:hover {
+    background: var(--white-gray);
+  }
+
+  @media (hover: none) {
+    &:hover {
+      background: unset;
+    }
+    &:active {
+      background: var(--white-gray);
+    }
+  }
+
+  @media screen and (width <= 600px) {
+    padding: 6px;
+  }
+
+}
+
+.info {
+  font-size: var(--basic-font-size);
+  font-weight: 500;
+  @media screen and (width < 800px) {
+    display: none;
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  background: var(--contrast-gray);
+
+  &.active {
+    background-color: var(--hover-items);
+  }
+
+  width: 360px;
+  height: 44px;
+  padding: 4px;
+  border-radius: var(--medium-border);
+}
