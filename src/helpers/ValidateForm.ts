@@ -4,7 +4,7 @@ import {
   UseFormGetValues,
   UseFormSetError,
 } from "react-hook-form";
-import { AddShipState, EditShipState, FooterPropsData, Inputs } from "../types";
+import { AddShipState, EditShipState, FooterPropsData, Inputs } from "types";
 
 interface OnSubmitProps {
   title: string;
@@ -20,7 +20,7 @@ interface OnSubmitProps {
 
 export const withSubmitProps =
   (props: OnSubmitProps): SubmitHandler<Inputs> =>
-  ({ ...formData }) => {
+  () => {
     const {
       title,
       deliveryDate,

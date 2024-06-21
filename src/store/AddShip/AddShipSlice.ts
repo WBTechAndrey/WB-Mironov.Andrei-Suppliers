@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddShipState, DropDownState } from "../../types";
+import { AddShipState, DropDownState } from "types";
 
 const initialState: AddShipState = {
   number: "",

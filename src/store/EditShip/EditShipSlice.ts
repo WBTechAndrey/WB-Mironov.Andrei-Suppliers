@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DropDownState, EditShipState } from "../../types";
+import { DropDownState, EditShipState } from "types";
 
 const initialState: Omit<EditShipState, "deliveryDate"> = {
   number: "",

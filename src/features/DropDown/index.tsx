@@ -1,9 +1,9 @@
 import style from "./index.module.scss";
 import React, { FC, ReactNode } from "react";
-import { ListItem } from "./ListItem";
+import { ListItem } from "features/DropDown/components/ListItem";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { combinedClassNames } from "../../helpers/combinedClassNames";
-import { DropDownState } from "../../types";
+import { combinedClassNames } from "helpers/combinedClassNames";
+import { DropDownState } from "types";
 
 export enum styleNames {
   fourRows = "fourRows",

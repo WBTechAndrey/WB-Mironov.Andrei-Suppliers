@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
-import App from "./pages/App/App";
 import { Provider } from "react-redux";
-import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
+import { ErrorBoundary } from "components/ErrorBoundary";
 import { setupStore } from "./store/store";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ConfigureRouter } from "./router";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -16,11 +15,7 @@ const store = setupStore();
 root.render(
   <ErrorBoundary>
     <Provider store={store}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<App />} />
-        </Routes>
-      </Router>
+      <ConfigureRouter />
     </Provider>
   </ErrorBoundary>,
 );

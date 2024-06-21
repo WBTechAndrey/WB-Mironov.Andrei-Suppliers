@@ -1,5 +1,5 @@
-import arrowLeft from "../../../assets/icons/mobile/arrow-left.svg";
-import arrowRight from "../../../assets/icons/mobile/arrow-right.svg";
+import arrowLeft from "assets/icons/mobile/arrow-left.svg";
+import arrowRight from "assets/icons/mobile/arrow-right.svg";
 import style from "./index.module.scss";
 import { useSearchParams } from "react-router-dom";
 import { FC } from "react";

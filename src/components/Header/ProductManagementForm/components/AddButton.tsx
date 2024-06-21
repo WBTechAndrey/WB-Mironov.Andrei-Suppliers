@@ -1,7 +1,7 @@
-import style from "./index.module.scss";
-import iconPlus from "../../../assets/icons/icon-plus.svg";
+import style from "components/Header/ProductManagementForm/index.module.scss";
+import iconPlus from "assets/icons/icon-plus.svg";
 import React, { FC, ReactNode } from "react";
-import { Button } from "../../common/Button";
+import { Button } from "components/common/Button";
 
 interface AddButtonProps {
   openModal: () => void;

@@ -1,7 +1,7 @@
 import { ModalSelect } from "./ModalSelect";
-import { styleNames } from "../../../features/DropDown/DropDown";
+import { styleNames } from "features/DropDown";
 import React from "react";
-import { DropDownState } from "../../../types";
+import { DropDownState } from "types";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 interface DeliveryTypeComponentProps {

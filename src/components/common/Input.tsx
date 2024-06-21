@@ -1,5 +1,5 @@
 import style from "../Header/index.module.scss";
-import search from "../../assets/icons/icon-search.svg";
+import search from "assets/icons/icon-search.svg";
 import React, { FC, memo } from "react";
 
 interface InputProps {

@@ -1,6 +1,6 @@
 import React, { FC, memo } from "react";
-import style from "../NewShipment/index.module.scss";
-import { Txt } from "../../common/Txt";
+import style from "components/Forms/index.module.scss";
+import { Txt } from "components/common/Txt";
 
 interface FormFieldProps {
   label: string;

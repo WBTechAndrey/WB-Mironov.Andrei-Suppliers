@@ -1,16 +1,16 @@
 import { FC, useCallback, useState } from "react";
 import style from "../index.module.scss";
 import ellipsis from "../../../assets/icons/ellipsis.svg";
-import { Txt } from "../../common/Txt";
-import { DropDown, styleNames } from "../../../features/DropDown/DropDown";
+import { Txt } from "components/common/Txt";
+import { DropDown, styleNames } from "features/DropDown";
 import { createPortal } from "react-dom";
-import { EditShipment } from "../../Forms/EditShipment/EditShipment";
-import { DotLoader } from "../../common/Loaders/DotLoader";
-import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
-import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
-import { useAppDispatch } from "../../../hooks/redux/redux";
+import { EditShipment } from "components/Forms/EditShipment";
+import { DotLoader } from "components/common/Loaders/DotLoader";
+import { shipmentsAPI } from "store/API/shipmentsAPI";
+import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
+import { useAppDispatch } from "hooks/redux/redux";
 import { useSelector } from "react-redux";
-import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
+import { selectActiveId } from "store/OpenDropDownMenu/selectors";
 import { DesktopRowData } from "../../../constants";
 
 interface Warehouse {
@@ -74,16 +74,27 @@ export const DesktopRow: FC<DesktopRowProps> = ({ item }) => {
     <>
       <ul className={style.list}>
         {fields.map((field, index) => (
-          <li key={index} className={`${style.item} ${style.transform}`}>
-            <Txt
-              text={
-                field === "quantity"
-                  ? `${String(item[field])} шт.`
-                  : field === "number"
+          <li
+            key={index}
+            className={`${style.item} ${style.transform} ${field === "quantity" ? style.tooltip : ""}`}
+          >
+            {field === "quantity" ? (
+              <>
+                <Txt text={`${String(item[field])} шт.`} />
+                <Txt
+                  className={style.tooltiptext}
+                  text={`${item.quantity} шт.`}
+                />
+              </>
+            ) : (
+              <Txt
+                text={
+                  field === "number"
                     ? String(item[field]).slice(-6)
                     : String(item[field])
-              }
-            />
+                }
+              />
+            )}
           </li>
         ))}
         <ul className={style.transform}>

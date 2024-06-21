@@ -69,6 +69,11 @@ export interface FormPropsData {
   errorInit: FetchBaseQueryError | SerializedError | undefined;
 }
 
+export interface NavButton {
+  text: string;
+  isActive: boolean;
+}
+
 export type Actions = {
   setType: ActionCreatorWithPayload<number>;
   setCity: ActionCreatorWithPayload<number>;

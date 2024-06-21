@@ -1,6 +1,6 @@
-@import '../../styles/mixins';
+@import 'styles/mixins';
 
-.table {
+.table > section {
   display: grid;
   border-collapse: collapse;
   grid-template-columns:
@@ -27,7 +27,7 @@
 
 
 @media screen and (width < 800px) {
-  .table {
+  .table > section {
     grid-template-columns:
           minmax(80px, 80px)
           minmax(80px, 1fr)
@@ -40,7 +40,6 @@
   }
 
   .headItem {
-
     span {
       max-width: 75px;
       @include ellipsis;
@@ -208,7 +207,7 @@
 
       @media (hover: none) {
         &:hover {
-          background-color: transparent;
+          background-color: unset;
         }
         &:active {
           background-color: var(--whitest-gray);

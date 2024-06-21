@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@import 'styles/mixins';
 
 .menu {
   position: absolute;
@@ -29,6 +29,14 @@
 
       &:hover {
         background: var(--white-hover);
+      }
+      @media (hover: none) {
+        &:hover {
+          background: unset;
+        }
+        &:active {
+            background: var(--white-hover);
+          }
       }
     }
   }
@@ -88,8 +96,6 @@
     bottom: 0;
     border-radius: 20px 20px 0 0;
     width: 100%;
-
-
 
     ul {
       li {

@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
+import { shipmentsAPI } from "store/API/shipmentsAPI";
 import {
   setAll,
   setCity,
@@ -7,8 +7,8 @@ import {
   setStatus,
   setType,
   setWarehouse,
-} from "../../../store/EditShip/EditShipSlice";
-import { useAppDispatch } from "../../../hooks/redux/redux";
+} from "store/EditShip/EditShipSlice";
+import { useAppDispatch } from "hooks/redux/redux";
 import { useSelector } from "react-redux";
 import {
   selectEditCities,
@@ -16,11 +16,11 @@ import {
   selectEditQuantity,
   selectEditStatus,
   selectEditWarehouse,
-} from "../../../store/EditShip/selectors";
+} from "store/EditShip/selectors";
 import { ShipmentModal } from "../ShipmentModal";
 import { ShipmentForm } from "../ShipmentForm";
-import { FetchingInfo } from "../../common/Loaders/FetchingInfo";
-import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
+import { FetchingInfo } from "components/common/Loaders/FetchingInfo";
+import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
 
 interface EditShipmentProps {
   onClose: () => void;

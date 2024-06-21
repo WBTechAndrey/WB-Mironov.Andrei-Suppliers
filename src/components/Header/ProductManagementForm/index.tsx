@@ -1,24 +1,25 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectSearch } from "../../../store/TableSearch/selectors";
-import { useAppDispatch } from "../../../hooks/redux/redux";
-import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
-import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
+import { selectSearch } from "store/TableSearch/selectors";
+import { useAppDispatch } from "hooks/redux/redux";
+import { selectActiveId } from "store/OpenDropDownMenu/selectors";
 import {
   setAllItems,
   setTableSearch,
-} from "../../../store/TableSearch/TableSearchSlice";
-import { Input } from "../../common/Input";
-import { styleNames } from "../../../features/DropDown/DropDown";
-import { Select } from "../../../features/Select/Select";
-import { Txt } from "../../common/Txt";
+} from "store/TableSearch/TableSearchSlice";
+import { Input } from "components/common/Input";
+import { styleNames } from "features/DropDown";
+import { Select } from "features/Select";
+import { Txt } from "components/common/Txt";
 import style from "./index.module.scss";
-import { useDebounce } from "../../../hooks/useDebounce";
+import { useDebounce } from "hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
-import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
-import { FetchingInfo } from "../../common/Loaders/FetchingInfo";
-import { AddButton } from "./AddButton";
-import { QueryParams } from "../../../types";
+import { shipmentsAPI } from "store/API/shipmentsAPI";
+import { FetchingInfo } from "components/common/Loaders/FetchingInfo";
+import { AddButton } from "components/Header/ProductManagementForm/components/AddButton";
+import { QueryParams } from "types";
+import useClickOutside from "hooks/useClickOutside";
+import useSearchParamsUpdater from "hooks/useSearchParamsUpdater";
 
 interface ProductManagementFormProps {
   openModal: () => void;
@@ -53,31 +54,11 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
         status,
       });
 
+    useClickOutside(activeId, dispatch);
+
     useEffect(() => {
       if (serverData) dispatch(setAllItems(serverData));
     }, [dispatch, serverData]);
-
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (!(event.target as HTMLElement).closest(`.noClose`)) {
-          dispatch(setActiveId(null));
-        }
-      };
-
-      if (activeId) {
-        document.addEventListener("mouseup", handleClickOutside);
-      }
-
-      return () => {
-        document.removeEventListener("mouseup", handleClickOutside);
-      };
-    }, [activeId, dispatch]);
-
-    useEffect(() => {
-      return () => {
-        dispatch(setActiveId(null));
-      };
-    }, [dispatch]);
 
     useEffect(() => {
       if (data && !isLoading) {
@@ -86,39 +67,29 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
       }
     }, [data, dispatch, isLoading]);
 
+    useSearchParamsUpdater(
+      searchParams,
+      searchValue,
+      currentSearchItemRef,
+      setSearchParams,
+    );
+
     const onChange = (value: string) => {
       setValue(value);
     };
 
-    useEffect(() => {
-      const params = Object.fromEntries(searchParams);
+    const [isHovered, setIsHovered] = useState(false);
 
-      const keys = {
-        "По номеру": QueryParams.Number,
-        "По типу поставки": QueryParams.DeliveryType,
-        "По статусу": QueryParams.Status,
-        "По городу": QueryParams.City,
-      };
-
-      const currentKey =
-        keys[currentSearchItemRef.current as keyof typeof keys];
-
-      if (currentKey) {
-        if (searchValue) {
-          params[currentKey] = searchValue;
-        } else {
-          delete params[currentKey];
-        }
-
-        Object.values(keys).forEach((key) => {
-          if (key !== currentKey) {
-            delete params[key];
-          }
-        });
-
-        setSearchParams(params);
+    const handleMouseEnter = (e: React.MouseEvent) => {
+      const target = e.target as HTMLFormElement;
+      if (target.id === "hover-form") {
+        setIsHovered(true);
       }
-    }, [searchParams, searchValue, setSearchParams]);
+    };
+
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+    };
 
     return (
       <>
@@ -129,7 +100,12 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
             <AddButton openModal={openModal}>
               <Txt className={style.info} text="Добавить поставку" />
             </AddButton>
-            <form className={`${style.form}`}>
+            <form
+              id={`hover-form`}
+              className={`${style.form} ${isHovered ? style.active : ""}`.trim()}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <Select
                 classNames={[styleNames.fourRows]}
                 data={data || []}

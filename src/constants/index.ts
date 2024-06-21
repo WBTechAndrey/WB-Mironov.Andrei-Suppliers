@@ -1,3 +1,5 @@
+import { NavButton } from "types";
+
 export const DEBOUNCE_DELAY = 500;
 
 export const tableHeaderColumns = [
@@ -11,7 +13,7 @@ export const tableHeaderColumns = [
   "",
 ];
 
-export const navRows = [
+export const navRows: NavButton[] = [
   { text: "Поставки", isActive: true },
   { text: "Товары", isActive: false },
   { text: "Цены и скидки", isActive: false },

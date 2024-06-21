@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AddShipState, EditShipState } from "../../types";
+import { AddShipState, EditShipState } from "types";
 import { Search } from "../TableSearch/TableSearchSlice";
 
 export interface Shipment {

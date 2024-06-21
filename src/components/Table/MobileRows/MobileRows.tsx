@@ -1,11 +1,11 @@
 import { FC, useCallback, useState } from "react";
-import { Item } from "../../../types";
+import { Item } from "types";
 import style from "./index.module.scss";
-import edit from "../../../assets/icons/mobile/edit.svg";
-import { Txt } from "../../common/Txt";
+import edit from "assets/icons/mobile/edit.svg";
+import { Txt } from "components/common/Txt";
 import { createPortal } from "react-dom";
-import { EditShipment } from "../../Forms/EditShipment/EditShipment";
-import { useModal } from "../../../hooks/useModal";
+import { EditShipment } from "components/Forms/EditShipment";
+import { useModal } from "hooks/useModal";
 
 export const MobileRows: FC<{ item: Item }> = ({ item }) => {
   const { isModalShow, openModal, closeModal } = useModal();

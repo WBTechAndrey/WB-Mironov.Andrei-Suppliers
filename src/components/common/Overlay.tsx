@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
-import style from "../Select/index.module.scss";
+import style from "features/Select/index.module.scss";
 
-export const DropdownOverlay: FC<{
+export const Overlay: FC<{
   children: ReactNode;
   onClick: (e: React.MouseEvent) => void;
   id: string;

@@ -1,7 +1,7 @@
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import React, { FC, memo } from "react";
-import { Select } from "../../../features/Select/Select";
-import { DropDownState } from "../../../types";
+import { Select } from "features/Select";
+import { DropDownState } from "types";
 import { ModalField } from "./ModalField";
 
 interface SelectFieldProps<T, A extends string> {

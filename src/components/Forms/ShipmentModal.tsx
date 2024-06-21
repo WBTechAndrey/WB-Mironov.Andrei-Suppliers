@@ -1,14 +1,14 @@
-import style from "./NewShipment/index.module.scss";
+import style from "components/Forms/index.module.scss";
 import React, { FC, memo } from "react";
 import { ModalHead } from "./Components/ModalHead";
 import { ModalFoot } from "./Components/ModalFoot";
-import { FooterPropsData, FormPropsData, Inputs } from "../../types";
+import { FooterPropsData, FormPropsData, Inputs } from "types";
 import { FetchingInfo } from "../common/Loaders/FetchingInfo";
 import { FormProvider, useForm } from "react-hook-form";
-import { useAppSelector } from "../../hooks/redux/redux";
+import { useAppSelector } from "hooks/redux/redux";
 import { useSelector } from "react-redux";
-import { selectDeliveryDate } from "../../store/AddShip/selectors";
-import { withSubmitProps } from "../../helpers/ValidateForm";
+import { selectDeliveryDate } from "store/AddShip/selectors";
+import { withSubmitProps } from "helpers/ValidateForm";
 
 interface ShipmentModalProps {
   number: string;
@@ -30,7 +30,6 @@ export const ShipmentModal: FC<ShipmentModalProps> = memo(
     footerProps,
     formProps,
     setOpened,
-    quantity: quantityReduxState,
   }) => {
     const {
       register,

@@ -1,11 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
-import { useAppDispatch } from "../../hooks/redux/redux";
+import React, { FC } from "react";
+import { useAppDispatch } from "hooks/redux/redux";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { DropDownState } from "../../types";
-import { useViewport } from "../../hooks/useViewport";
-import style from "./index.module.scss";
-import union from "../../assets/icons/mobile/Union.svg";
-import { setActiveId } from "../../store/OpenDropDownMenu/isOpenSlice";
+import { DropDownState } from "types";
+import style from "features/DropDown/index.module.scss";
+import union from "assets/icons/mobile/Union.svg";
+import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
+import { BASIC_WIDTH, MOBILE_WIDTH } from "../../../constants";
+import { useResponsiveViewport } from "hooks/useResponsiveViewport";
 
 interface ListItemProps {
   el: DropDownState;
@@ -24,11 +25,7 @@ export const ListItem: FC<ListItemProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const [viewport, setViewport] = useState(1366);
-  const { width } = useViewport();
-  useEffect(() => {
-    setViewport(width);
-  }, [viewport, width]);
+  const { viewport } = useResponsiveViewport(BASIC_WIDTH);
 
   const setActiveItem = () => {
     if (action) dispatch(action(el.id));
@@ -49,7 +46,7 @@ export const ListItem: FC<ListItemProps> = ({
       onClick={setActiveItem}
     >
       {el.text}
-      {width <= 600 && el.selected ? (
+      {viewport <= MOBILE_WIDTH && el.selected ? (
         <img className={style.icon} src={union} alt="select icon" />
       ) : null}
     </li>

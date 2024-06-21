@@ -1,8 +1,8 @@
 import style from "./index.module.scss";
-import { Title } from "../../common/Title";
-import { Txt } from "../../common/Txt";
-import { Button } from "../../common/Button";
-import closeIcon from "../../../assets/icons/close-icon.svg";
+import { Title } from "components/common/Title";
+import { Txt } from "components/common/Txt";
+import { Button } from "components/common/Button";
+import closeIcon from "assets/icons/close-icon.svg";
 import React, { FC, memo } from "react";
 
 interface FooterProps {

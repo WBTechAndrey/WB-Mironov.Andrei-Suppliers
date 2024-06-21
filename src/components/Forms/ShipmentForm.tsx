@@ -1,13 +1,13 @@
 import React, { FC, memo } from "react";
-import { Actions, DropDownState, Inputs, RHF } from "../../types";
-import { styleNames } from "../../features/DropDown/DropDown";
+import { Actions, DropDownState, Inputs, RHF } from "types";
+import { styleNames } from "features/DropDown";
 import { ModalSelect } from "./Components/ModalSelect";
 import Calendar from "color-calendar";
 import { DeliveryTypeComponent } from "./Components/DeliveryTypeComponent";
 import { QuantityComponent } from "./Components/QuantityComponent";
 import { ModalField } from "./Components/ModalField";
-import style from "./NewShipment/index.module.scss";
-import calendarIcon from "../../assets/icons/calendar.svg";
+import style from "components/Forms/index.module.scss";
+import calendarIcon from "assets/icons/calendar.svg";
 import { UseFormSetValue } from "react-hook-form";
 
 interface ShipmentFormProps extends RHF {

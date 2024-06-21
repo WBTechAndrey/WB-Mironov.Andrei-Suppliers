@@ -16,9 +16,20 @@
   &:hover {
     background: var(--white-gray);
   }
+
+  @media (hover: none) {
+    &:hover {
+      background: unset;
+    }
+    &:active {
+      background: var(--white-gray);
+    }
+  }
+
   @media screen and (width <= 600px) {
     padding: 6px;
   }
+
 }
 
 .info {
@@ -33,9 +44,11 @@
   display: flex;
   justify-content: space-between;
   background: var(--contrast-gray);
-  &:hover {
+
+  &.active {
     background-color: var(--hover-items);
   }
+
   width: 360px;
   height: 44px;
   padding: 4px;

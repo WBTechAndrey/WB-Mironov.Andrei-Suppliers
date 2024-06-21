@@ -1,9 +1,9 @@
 import style from "./index.module.scss";
-import { Button } from "../../common/Button";
+import { Button } from "components/common/Button";
 import React, { FC, memo } from "react";
 import { UseFormGetValues } from "react-hook-form";
-import { FooterPropsData, FormPropsData, Inputs } from "../../../types";
-import { FetchingInfo } from "../../common/Loaders/FetchingInfo";
+import { FooterPropsData, FormPropsData, Inputs } from "types";
+import { FetchingInfo } from "components/common/Loaders/FetchingInfo";
 
 type FooterProps = Partial<FormPropsData> &
   FooterPropsData & {
@@ -35,8 +35,7 @@ export const ModalFoot: FC<FooterProps> = memo(
             ></Button>
             <Button
               className={style.rollbackBtn}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 onClose(true);
               }}
               text={`Отменить`}

@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { ModalField } from "./ModalField";
-import style from "../NewShipment/index.module.scss";
-import { Txt } from "../../common/Txt";
+import style from "components/Forms/index.module.scss";
+import { Txt } from "components/common/Txt";
 import { useSelector } from "react-redux";
-import { RHF } from "../../../types";
-import { selectEditQuantity } from "../../../store/EditShip/selectors";
+import { RHF } from "types";
+import { selectEditQuantity } from "store/EditShip/selectors";
 
 interface QuantityProps extends Required<RHF> {
   target: string | undefined;

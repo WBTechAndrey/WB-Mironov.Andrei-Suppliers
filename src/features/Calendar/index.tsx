@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import Calendar from "color-calendar";
 import "./index.scss";
-import { useAppDispatch } from "../../hooks/redux/redux";
-import { setDate } from "../../store/AddShip/AddShipSlice";
-import { formatDate } from "../../helpers/formatDate";
+import { useAppDispatch } from "hooks/redux/redux";
+import { setDate } from "store/AddShip/AddShipSlice";
+import { formatDate } from "helpers/formatDate";
 import { useSelector } from "react-redux";
-import { selectDeliveryDate } from "../../store/AddShip/selectors";
-import { Inputs } from "../../types";
+import { selectDeliveryDate } from "store/AddShip/selectors";
+import { Inputs } from "types";
 import { UseFormSetValue } from "react-hook-form";
 
 interface CalendarComponentProps {

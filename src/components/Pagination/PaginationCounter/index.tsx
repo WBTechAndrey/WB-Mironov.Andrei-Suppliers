@@ -1,7 +1,7 @@
-import { Txt } from "../../common/Txt";
+import { Txt } from "components/common/Txt";
 import { useSearchParams } from "react-router-dom";
 import style from "./index.module.scss";
-import { QueryParams } from "../../../types";
+import { QueryParams } from "types";
 import { DEFAULT_START_PAGE } from "../../../constants";
 
 export const PaginationCounter = () => {

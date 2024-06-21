@@ -1,6 +1,6 @@
 import React, { FC, memo, useCallback, useEffect, useRef } from "react";
-import { CalendarComponent } from "../../../features/Calendar/Calendar";
-import { useAppDispatch } from "../../../hooks/redux/redux";
+import { CalendarComponent } from "features/Calendar";
+import { useAppDispatch } from "hooks/redux/redux";
 import Calendar from "color-calendar";
 import {
   resetSelections,
@@ -10,8 +10,8 @@ import {
   setStatus,
   setType,
   setWarehouse,
-} from "../../../store/AddShip/AddShipSlice";
-import { setActiveId } from "../../../store/OpenDropDownMenu/isOpenSlice";
+} from "store/AddShip/AddShipSlice";
+import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
 import {
   selectCities,
   selectDeliveryDate,
@@ -20,13 +20,13 @@ import {
   selectQuantity,
   selectStatus,
   selectWarehouse,
-} from "../../../store/AddShip/selectors";
+} from "store/AddShip/selectors";
 import { useSelector } from "react-redux";
-import { selectActiveId } from "../../../store/OpenDropDownMenu/selectors";
-import { shipmentsAPI } from "../../../store/API/shipmentsAPI";
+import { selectActiveId } from "store/OpenDropDownMenu/selectors";
+import { shipmentsAPI } from "store/API/shipmentsAPI";
 import { ShipmentForm } from "../ShipmentForm";
 import { ShipmentModal } from "../ShipmentModal";
-import { Actions } from "../../../types";
+import { Actions } from "types";
 
 interface NewShipmentProps {
   onClose: () => void;

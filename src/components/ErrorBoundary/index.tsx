@@ -1,8 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Button } from "../common/Button";
 import "./index.scss";
-import { getAllCookieNames } from "../../helpers/Cookies/getAllCookieNames";
-import { resetCookies } from "../../helpers/Cookies/resetCookies";
+import { getAllCookieNames } from "helpers/Cookies/getAllCookieNames";
+import { resetCookies } from "helpers/Cookies/resetCookies";
 import { Title } from "../common/Title";
 import { Txt } from "../common/Txt";
 
@@ -39,7 +39,7 @@ export class ErrorBoundary extends Component<
     localStorage.clear();
     sessionStorage.clear();
     const cookieNames = getAllCookieNames();
-    cookieNames.forEach((cookieName) => {
+    cookieNames.forEach((cookieName: string) => {
       resetCookies(cookieName, "");
     });
     window.location.href = "/";

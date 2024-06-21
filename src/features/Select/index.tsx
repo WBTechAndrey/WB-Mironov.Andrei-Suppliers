@@ -1,29 +1,28 @@
-import { Txt } from "../../components/common/Txt";
+import { Txt } from "components/common/Txt";
 import React, {
   Dispatch,
   FC,
   memo,
   ReactNode,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
 import style from "./index.module.scss";
-import arrowTop from "../../assets/icons/arrow-top.svg";
-import arrowDown from "../../assets/icons/arrow-down.svg";
-import closeIcon from "../../assets/icons/close-icon.svg";
-import { DropDown } from "../DropDown/DropDown";
+import arrowTop from "assets/icons/arrow-top.svg";
+import arrowDown from "assets/icons/arrow-down.svg";
+import closeIcon from "assets/icons/close-icon.svg";
+import { DropDown } from "features/DropDown";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { combinedClassNames } from "../../helpers/combinedClassNames";
-import { useAppDispatch } from "../../hooks/redux/redux";
-import { setActiveId } from "../../store/OpenDropDownMenu/isOpenSlice";
-import { selectActiveId } from "../../store/OpenDropDownMenu/selectors";
+import { combinedClassNames } from "helpers/combinedClassNames";
+import { useAppDispatch } from "hooks/redux/redux";
+import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
+import { selectActiveId } from "store/OpenDropDownMenu/selectors";
 import { useSelector } from "react-redux";
-import { DropDownState } from "../../types";
-import { useViewport } from "../../hooks/useViewport";
+import { DropDownState } from "types";
 import { createPortal } from "react-dom";
-import { BASIC_WIDTH, MOBILE_WIDTH } from "../../constants";
-import { DropdownOverlay } from "../DropDown/DropdownOverlay";
+import { BASIC_WIDTH, MOBILE_WIDTH } from "../../constants/index";
+import { Overlay } from "components/common/Overlay";
+import { useResponsiveViewport } from "hooks/useResponsiveViewport";
 
 interface SelectProps {
   text?: string;
@@ -62,11 +61,7 @@ export const Select: FC<SelectProps> = memo(
       }
     };
 
-    const [viewport, setViewport] = useState(BASIC_WIDTH);
-    const { width } = useViewport();
-    useEffect(() => {
-      setViewport(width);
-    }, [viewport, width]);
+    const { viewport } = useResponsiveViewport(BASIC_WIDTH);
 
     const allClassNames = combinedClassNames(classNames, style);
 
@@ -94,7 +89,7 @@ export const Select: FC<SelectProps> = memo(
           />
         </figure>
 
-        {width <= MOBILE_WIDTH ? (
+        {viewport <= MOBILE_WIDTH ? (
           ""
         ) : (
           <DropDown
@@ -106,9 +101,9 @@ export const Select: FC<SelectProps> = memo(
           />
         )}
         {isModalShow &&
-          width <= MOBILE_WIDTH &&
+          viewport <= MOBILE_WIDTH &&
           createPortal(
-            <DropdownOverlay id={`portal`} onClick={closePortal}>
+            <Overlay id={`portal`} onClick={closePortal}>
               <DropDown
                 classNames={classNames}
                 data={data}
@@ -123,7 +118,7 @@ export const Select: FC<SelectProps> = memo(
                   </div>
                 }
               />
-            </DropdownOverlay>,
+            </Overlay>,
             document.body,
           )}
       </div>

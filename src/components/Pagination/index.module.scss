@@ -19,9 +19,20 @@
   font-size: var(--light-font-size);
   height: 15px;
   border-radius: var(--mini-border);
+
+  &:hover {
+    background: var(--white-gray);
+  }
+
+  @media (hover: none) {
     &:hover {
+      background: unset;
+    }
+    &:active {
       background: var(--white-gray);
     }
+  }
+
 
   &:disabled {
     color: var(--gray);
