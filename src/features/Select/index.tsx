@@ -15,14 +15,12 @@ import { DropDown } from "features/DropDown";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { combinedClassNames } from "helpers/combinedClassNames";
 import { useAppDispatch } from "hooks/redux/redux";
-import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
-import { selectActiveId } from "store/OpenDropDownMenu/selectors";
-import { useSelector } from "react-redux";
 import { DropDownState } from "types";
 import { createPortal } from "react-dom";
 import { BASIC_WIDTH, MOBILE_WIDTH } from "../../constants/index";
 import { Overlay } from "components/common/Overlay";
 import { useResponsiveViewport } from "hooks/useResponsiveViewport";
+import { Img } from "components/common/Img";
 
 interface SelectProps {
   text?: string;
@@ -30,15 +28,16 @@ interface SelectProps {
   setIsActive?: Dispatch<SetStateAction<boolean>>;
   data: DropDownState[];
   action?: ActionCreatorWithPayload<number>;
+  actionClose: ActionCreatorWithPayload<null | string>;
   classNames: Array<string>;
   label?: string;
+  activeId: string | null;
 }
 
 export const Select: FC<SelectProps> = memo(
-  ({ data, action, classNames, label }) => {
+  ({ data, action, classNames, label, actionClose, activeId }) => {
     const activeText = data.find((item) => item.selected);
     const textToShow = activeText ? activeText.text : "";
-    const activeId = useSelector(selectActiveId);
     const dispatch = useAppDispatch();
     const isActive = activeId === textToShow;
     const [isModalShow, setIsModalShow] = useState(false);
@@ -55,9 +54,9 @@ export const Select: FC<SelectProps> = memo(
         openModal();
       }
       if (isActive) {
-        dispatch(setActiveId(null));
+        dispatch(actionClose(null));
       } else {
-        dispatch(setActiveId(textToShow));
+        dispatch(actionClose(textToShow));
       }
     };
 
@@ -69,7 +68,7 @@ export const Select: FC<SelectProps> = memo(
       const target = e.target as HTMLDivElement;
       if (target.id === `portal`) {
         closeModal();
-        dispatch(setActiveId(null));
+        dispatch(actionClose(null));
       }
     };
 
@@ -82,7 +81,7 @@ export const Select: FC<SelectProps> = memo(
           onClick={handleFigureClick}
         >
           <Txt text={textToShow} />
-          <img
+          <Img
             className={style.arrow}
             src={isActive ? arrowTop : arrowDown}
             alt="list arrow"
@@ -96,8 +95,9 @@ export const Select: FC<SelectProps> = memo(
             classNames={classNames}
             data={data}
             isActive={isActive}
-            onClick={() => setActiveId(null)}
+            onClick={() => actionClose(null)}
             action={action}
+            actionClose={actionClose}
           />
         )}
         {isModalShow &&
@@ -108,13 +108,14 @@ export const Select: FC<SelectProps> = memo(
                 classNames={classNames}
                 data={data}
                 isActive={isActive}
-                onClick={() => dispatch(setActiveId(null))}
+                onClick={() => dispatch(actionClose(null))}
                 closeModal={closeModal}
+                actionClose={actionClose}
                 action={action}
                 children={
                   <div className={style.info}>
                     <Txt text={label} />
-                    <img src={closeIcon} alt="close icon" />
+                    <Img src={closeIcon} alt="close icon" />
                   </div>
                 }
               />

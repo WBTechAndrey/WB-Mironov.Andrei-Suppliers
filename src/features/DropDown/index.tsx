@@ -17,6 +17,7 @@ interface DropDownProps {
   isActive: boolean;
   data?: DropDownState[];
   action?: ActionCreatorWithPayload<number>;
+  actionClose: ActionCreatorWithPayload<null | string>;
   onClick: () => void;
   classNames: Array<string>;
   deleteShip?: () => void;
@@ -33,6 +34,7 @@ export const DropDown: FC<DropDownProps> = ({
   deleteShip,
   children,
   closeModal,
+  actionClose,
 }) => {
   const allClassNames = combinedClassNames(classNames, style);
 
@@ -44,6 +46,7 @@ export const DropDown: FC<DropDownProps> = ({
       onClick={onClick}
       deleteShip={deleteShip}
       closeModal={closeModal}
+      actionClose={actionClose}
     />
   ));
 

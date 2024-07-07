@@ -20,6 +20,7 @@ import { AddButton } from "components/Header/ProductManagementForm/components/Ad
 import { QueryParams, SearchValues } from "enums";
 import useClickOutside from "hooks/useClickOutside";
 import useSearchParamsUpdater from "hooks/useSearchParamsUpdater";
+import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
 
 interface ProductManagementFormProps {
   openModal: () => void;
@@ -45,6 +46,9 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
     const dispatch = useAppDispatch();
     const [value, setValue] = useState(getQueryParams);
     const searchValue = useDebounce(value);
+    const [prevValue, setPrevValue] = useState("");
+    const [isHovered, setIsHovered] = useState(false);
+    const [isData, setIsData] = useState(false);
 
     const { data: serverData, isLoading } =
       shipmentsAPI.useGetSearchInfoParamsQuery({
@@ -54,9 +58,7 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
         status,
       });
 
-    useClickOutside(activeId, dispatch);
-
-    const [isData, setIsData] = useState(false);
+    useClickOutside(activeId, setActiveId);
 
     useEffect(() => {
       switch (activeId) {
@@ -94,8 +96,13 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
       if (data && !isLoading) {
         const selectedItem = data.find((el) => el.selected);
         currentSearchItemRef.current = selectedItem ? selectedItem.text : "";
+        setPrevValue(selectedItem?.text ?? "");
       }
     }, [data, dispatch, isLoading]);
+
+    useEffect(() => {
+      setValue("");
+    }, [prevValue]);
 
     useSearchParamsUpdater(
       searchParams,
@@ -107,8 +114,6 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
     const onChange = (value: string) => {
       setValue(value);
     };
-
-    const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = (e: React.MouseEvent) => {
       const target = e.target as HTMLFormElement;
@@ -140,8 +145,14 @@ export const ProductManagementForm: FC<ProductManagementFormProps> = memo(
                 classNames={[styleNames.fourRows]}
                 data={data || []}
                 action={setTableSearch}
+                actionClose={setActiveId}
+                activeId={activeId}
               />
-              <Input onChange={onChange} value={value} />
+              <Input
+                onChange={onChange}
+                value={value}
+                currentSearchItem={currentSearchItemRef}
+              />
             </form>
           </section>
         )}

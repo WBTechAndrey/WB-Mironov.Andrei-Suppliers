@@ -4,7 +4,7 @@ import { ModalHead } from "./Components/ModalHead";
 import { ModalFoot } from "./Components/ModalFoot";
 import { FooterPropsData, FormPropsData, Inputs } from "types";
 import { FetchingInfo } from "../common/Loaders/FetchingInfo";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAppSelector } from "hooks/redux/redux";
 import { useSelector } from "react-redux";
 import { selectDeliveryDate } from "store/AddShip/selectors";
@@ -46,8 +46,6 @@ export const ShipmentModal: FC<ShipmentModalProps> = memo(
     const deliveryDate = useSelector(selectDeliveryDate);
     const updateData = useAppSelector((state) => state.editShip);
     const addData = useAppSelector((state) => state.addShip);
-
-    const methods = useForm();
 
     const onSubmit = withSubmitProps({
       title,
@@ -95,26 +93,30 @@ export const ShipmentModal: FC<ShipmentModalProps> = memo(
                 />
               </>
             ) : (
-              <FormProvider {...methods}>
+              <>
                 <form
                   className={`${style.form} ${footerProps.target === "edit" ? style.editForm : ""}`.trim()}
                   id={formId}
                   onSubmit={handleSubmit(onSubmit)}
                 >
-                  {React.cloneElement(SuperComponent as React.ReactElement, {
-                    register,
-                    watch,
-                    control,
-                    errors,
-                    setValue,
-                  })}
-                  <ModalFoot
-                    getValues={getValues}
-                    {...footerProps}
-                    {...formProps}
-                  />
+                  <main>
+                    {React.cloneElement(SuperComponent as React.ReactElement, {
+                      register,
+                      watch,
+                      control,
+                      errors,
+                      setValue,
+                    })}
+                  </main>
+                  <div>
+                    <ModalFoot
+                      getValues={getValues}
+                      {...footerProps}
+                      {...formProps}
+                    />
+                  </div>
                 </form>
-              </FormProvider>
+              </>
             )}
           </dialog>
         </div>

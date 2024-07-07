@@ -4,13 +4,14 @@ import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { DropDownState } from "types";
 import style from "features/DropDown/index.module.scss";
 import union from "assets/icons/mobile/Union.svg";
-import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
 import { BASIC_WIDTH, MOBILE_WIDTH } from "../../../constants";
 import { useResponsiveViewport } from "hooks/useResponsiveViewport";
+import { Img } from "components/common/Img";
 
 interface ListItemProps {
   el: DropDownState;
   action?: ActionCreatorWithPayload<number>;
+  actionClose: ActionCreatorWithPayload<null | string>;
   onClick: () => void;
   deleteShip?: () => void;
   closeModal?: () => void;
@@ -22,6 +23,7 @@ export const ListItem: FC<ListItemProps> = ({
   onClick,
   deleteShip,
   closeModal,
+  actionClose,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -32,7 +34,7 @@ export const ListItem: FC<ListItemProps> = ({
     if (closeModal) closeModal();
     if (el.text === "Редактировать") {
       onClick();
-      dispatch(setActiveId(null));
+      dispatch(actionClose(null));
     }
     if (el.text === "Отменить поставку")
       if (deleteShip) {
@@ -47,7 +49,7 @@ export const ListItem: FC<ListItemProps> = ({
     >
       {el.text}
       {viewport <= MOBILE_WIDTH && el.selected ? (
-        <img className={style.icon} src={union} alt="select icon" />
+        <Img className={style.icon} src={union} alt="select icon" />
       ) : null}
     </li>
   );

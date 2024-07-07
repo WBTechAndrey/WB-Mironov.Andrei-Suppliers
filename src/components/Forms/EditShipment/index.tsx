@@ -90,6 +90,7 @@ export const EditShipment: FC<EditShipmentProps> = ({ onClose, activeId }) => {
               cities={cities}
               type={deliveryType}
               actions={actions}
+              activeId={activeId}
             />
           }
         ></ShipmentModal>

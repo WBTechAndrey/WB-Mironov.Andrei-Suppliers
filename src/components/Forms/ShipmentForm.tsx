@@ -9,6 +9,9 @@ import { ModalField } from "./Components/ModalField";
 import style from "components/Forms/index.module.scss";
 import calendarIcon from "assets/icons/calendar.svg";
 import { UseFormSetValue } from "react-hook-form";
+import useClickOutside from "hooks/useClickOutside";
+import { setActiveModalsId } from "store/OpenDropDownMenu/isOpenSlice";
+import { Img } from "components/common/Img";
 
 interface ShipmentFormProps extends RHF {
   target?: string;
@@ -19,7 +22,7 @@ interface ShipmentFormProps extends RHF {
   deliveryDate?: string;
   setOpened?: () => void;
   focused?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  activeId?: string | null;
+  activeId: string | null;
   calendarRef?: React.RefObject<Calendar | null> | undefined;
   CalendarComponent?: FC<{
     calendarRef: React.RefObject<Calendar | null> | undefined;
@@ -47,6 +50,8 @@ export const ShipmentForm: FC<ShipmentFormProps> = memo(
   }) => {
     const formSettings = register && errors && setValue;
 
+    useClickOutside(activeId, setActiveModalsId);
+
     return (
       <>
         {setOpened && register ? (
@@ -61,7 +66,7 @@ export const ShipmentForm: FC<ShipmentFormProps> = memo(
                 required: false,
               })}
             />
-            <img src={calendarIcon} alt="calendar icon" onClick={setOpened} />
+            <Img src={calendarIcon} alt="calendar icon" onClick={setOpened} />
             {activeId === "calendar" && CalendarComponent && setValue && (
               <CalendarComponent
                 calendarRef={calendarRef}

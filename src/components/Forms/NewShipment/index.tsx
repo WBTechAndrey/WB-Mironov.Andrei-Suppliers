@@ -11,7 +11,7 @@ import {
   setType,
   setWarehouse,
 } from "store/AddShip/AddShipSlice";
-import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
+import { setActiveModalsId } from "store/OpenDropDownMenu/isOpenSlice";
 import {
   selectCities,
   selectDeliveryDate,
@@ -22,7 +22,7 @@ import {
   selectWarehouse,
 } from "store/AddShip/selectors";
 import { useSelector } from "react-redux";
-import { selectActiveId } from "store/OpenDropDownMenu/selectors";
+import { selectActiveModalsId } from "store/OpenDropDownMenu/selectors";
 import { shipmentsAPI } from "store/API/shipmentsAPI";
 import { ShipmentForm } from "../ShipmentForm";
 import { ShipmentModal } from "../ShipmentModal";
@@ -35,7 +35,7 @@ interface NewShipmentProps {
 export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
   const dispatch = useAppDispatch();
   const calendarRef = useRef<Calendar | null>(null);
-  const activeId = useSelector(selectActiveId);
+  const activeId = useSelector(selectActiveModalsId);
   const deliveryDate = useSelector(selectDeliveryDate);
   const number = useSelector(selectNumber);
   const [createPost, { isLoading, isSuccess }] =
@@ -68,7 +68,7 @@ export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
     dispatch(setAll(data));
 
     return () => {
-      dispatch(setActiveId(null));
+      dispatch(setActiveModalsId(null));
     };
   }, [data, dispatch]);
 
@@ -78,15 +78,15 @@ export const NewShipment: FC<NewShipmentProps> = memo(({ onClose }) => {
 
   const setOpened = useCallback(() => {
     if (activeId === "calendar") {
-      dispatch(setActiveId(null));
+      dispatch(setActiveModalsId(null));
     } else {
-      dispatch(setActiveId("calendar"));
+      dispatch(setActiveModalsId("calendar"));
     }
   }, [activeId, dispatch]);
 
   useEffect(() => {
     return () => {
-      dispatch(setActiveId(null));
+      dispatch(setActiveModalsId(null));
       dispatch(resetSelections());
     };
   }, [dispatch]);

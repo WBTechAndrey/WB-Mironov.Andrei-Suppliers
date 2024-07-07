@@ -1,6 +1,6 @@
 {
   "infoToAddShip": {
-    "number": "626881",
+    "number": "182042",
     "deliveryDate": "",
     "cities": [
       {
@@ -295,6 +295,19 @@
       "warehouse": {
         "name": "Склад",
         "address": "д. Черная Грязь, ул. Промышленная, с.2"
+      },
+      "status": "В пути"
+    },
+    {
+      "id": "1719148194536",
+      "number": "182042",
+      "deliveryDate": "23.06.2024",
+      "city": "Москва",
+      "quantity": "2",
+      "deliveryType": "Короб",
+      "warehouse": {
+        "name": "Склад",
+        "address": "Ногинский р-н, Московская обл., г. Электросталь"
       },
       "status": "В пути"
     }

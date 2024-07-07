@@ -4,6 +4,7 @@ import { Txt } from "components/common/Txt";
 import { Button } from "components/common/Button";
 import closeIcon from "assets/icons/close-icon.svg";
 import React, { FC, memo } from "react";
+import { Img } from "components/common/Img";
 
 interface FooterProps {
   onClose: (value: boolean) => void;
@@ -21,7 +22,7 @@ export const ModalHead: FC<FooterProps> = memo(({ onClose, number, title }) => {
         className={style.closeButton}
         onClick={() => onClose(true)}
       >
-        <img src={closeIcon} alt="icon to close modal" />
+        <Img src={closeIcon} alt="icon to close modal" />
       </Button>
     </header>
   );

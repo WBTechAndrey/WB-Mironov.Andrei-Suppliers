@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectDeliveryDate } from "store/AddShip/selectors";
 import { Inputs } from "types";
 import { UseFormSetValue } from "react-hook-form";
+import { setActiveModalsId } from "store/OpenDropDownMenu/isOpenSlice";
 
 interface CalendarComponentProps {
   calendarRef: React.RefObject<Calendar | null> | undefined;
@@ -50,14 +51,22 @@ export const CalendarComponent: React.FC<CalendarComponentProps> = ({
     }
 
     return () => {};
-  }, [calendarRef, handleDateChange]);
+  }, [calendarRef, deliveryDate, handleDateChange]);
+
+  const closeCalendar = useCallback(() => {
+    dispatch(setActiveModalsId(null));
+  }, [dispatch]);
 
   useEffect(() => {
     if (deliveryDate) {
       const date = formatDate(deliveryDate);
       if (date) calendarInstanceRef.current?.setDate(date);
     }
-  }, [deliveryDate, dispatch]);
+
+    const calendarDataTable = document.querySelector(".calendar__days");
+    if (calendarDataTable)
+      calendarDataTable.addEventListener("click", closeCalendar);
+  }, [closeCalendar, deliveryDate, dispatch]);
 
   return <div className={`noClose`} id="calendar"></div>;
 };

@@ -35,7 +35,6 @@
   column-gap: 20px;
   font-size: var(--basic-font-size);
   font-weight: 500;
-  transform: translateY(-18px);
 }
 
 .sendBtn {
@@ -66,6 +65,7 @@
   }
   .footer{
     padding-top: 0;
+    transform: translateY(0);
   }
   .sendBtn {
     width: 100%;

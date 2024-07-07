@@ -9,6 +9,7 @@ import { ProductPage } from "pages/Products";
 import { PricesPage } from "pages/Prices";
 import { AnalyticsPage } from "pages/Analytics";
 import { MarketingPage } from "pages/Marketing";
+import { NotFoundPage } from "pages/NotFoundPage";
 
 export const ConfigureRouter = () => {
   return (
@@ -20,6 +21,7 @@ export const ConfigureRouter = () => {
         <Route path="/Цены и скидки" element={<PricesPage />} />
         <Route path="/Аналитика" element={<AnalyticsPage />} />
         <Route path="/Реклама" element={<MarketingPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

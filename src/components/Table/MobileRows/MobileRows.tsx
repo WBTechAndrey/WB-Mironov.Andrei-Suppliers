@@ -6,6 +6,7 @@ import { Txt } from "components/common/Txt";
 import { createPortal } from "react-dom";
 import { EditShipment } from "components/Forms/EditShipment";
 import { useModal } from "hooks/useModal";
+import { Img } from "components/common/Img";
 
 export const MobileRows: FC<{ item: Item }> = ({ item }) => {
   const { isModalShow, openModal, closeModal } = useModal();
@@ -39,7 +40,7 @@ export const MobileRows: FC<{ item: Item }> = ({ item }) => {
           <Txt className={style.value} text={item.deliveryDate}></Txt>
         </div>
         <div className={style.editIcon}>
-          <img
+          <Img
             onClick={() => handleFigureClick(String(item.id))}
             src={edit}
             alt="edit icon"

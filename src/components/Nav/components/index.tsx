@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import style from "components/Nav/index.module.scss";
 import { NavButton } from "types";
 import { NavLink } from "react-router-dom";
@@ -7,7 +7,7 @@ export const NavButtons: FC<{
   className?: string;
   buttonsData: NavButton[];
   handleButtonClick: (text: string) => void;
-}> = ({ className, buttonsData, handleButtonClick }) => {
+}> = memo(({ className, buttonsData, handleButtonClick }) => {
   return (
     <nav className={`${style.nav} ${className ? className : false}`}>
       {buttonsData.map((button, index) => (
@@ -25,4 +25,4 @@ export const NavButtons: FC<{
       ))}
     </nav>
   );
-};
+});

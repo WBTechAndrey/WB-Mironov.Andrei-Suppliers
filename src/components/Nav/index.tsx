@@ -1,7 +1,7 @@
 import { Button } from "../common/Button";
 import style from "./index.module.scss";
 import logo from "../../assets/wb.svg";
-import React, { useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import doc from "../../assets/icons/mobile/doc.svg";
 import burger from "../../assets/icons/mobile/burger-burger.svg";
 import refresh from "../../assets/icons/mobile/refresh.svg";
@@ -12,28 +12,34 @@ import { Overlay } from "components/common/Overlay";
 import { createPortal } from "react-dom";
 import { NavButtons } from "components/Nav/components";
 
-export const Nav = () => {
+export const Nav = memo(() => {
   const [buttonsData, setButtonsData] = useState(navRows);
 
-  const handleButtonClick = (text: string) => {
-    setButtonsData(
-      buttonsData.map((button) =>
-        button.text === text
-          ? { ...button, isActive: true }
-          : { ...button, isActive: false },
-      ),
-    );
-  };
+  const handleButtonClick = useCallback(
+    (text: string) => {
+      setButtonsData(
+        buttonsData.map((button) =>
+          button.text === text
+            ? { ...button, isActive: true }
+            : { ...button, isActive: false },
+        ),
+      );
+    },
+    [buttonsData],
+  );
 
   const { isModalShow, openModal, closeModal } = useModal();
 
-  const closePortal = (e: React.MouseEvent) => {
-    const allowedIds = ["burger", "0", "1", "2", "3", "4"];
-    const target = e.target as HTMLDivElement;
-    if (allowedIds.includes(target.id)) {
-      closeModal();
-    }
-  };
+  const closePortal = useCallback(
+    (e: React.MouseEvent) => {
+      const allowedIds = ["burger", "0", "1", "2", "3", "4"];
+      const target = e.target as HTMLDivElement;
+      if (allowedIds.includes(target.id)) {
+        closeModal();
+      }
+    },
+    [closeModal],
+  );
 
   return (
     <section className={style.navbar}>
@@ -70,4 +76,4 @@ export const Nav = () => {
         )}
     </section>
   );
-};
+});

@@ -3,6 +3,7 @@ import arrowRight from "assets/icons/mobile/arrow-right.svg";
 import style from "./index.module.scss";
 import { useSearchParams } from "react-router-dom";
 import { FC } from "react";
+import { Img } from "components/common/Img";
 
 interface PaginationMobileProps {
   totalPages: number;
@@ -13,7 +14,7 @@ export const PaginationMobile: FC<PaginationMobileProps> = ({
   totalPages,
   currentPage,
 }) => {
-  const [_unused, setSearchParams] = useSearchParams();
+  const [_searchParams, setSearchParams] = useSearchParams();
 
   const handlePreviousClick = () => {
     if (currentPage > 1) {
@@ -37,7 +38,7 @@ export const PaginationMobile: FC<PaginationMobileProps> = ({
           onClick={handlePreviousClick}
           disabled={currentPage === 1}
         >
-          <img className={style.back} src={arrowLeft} alt="nav back" />
+          <Img className={style.back} src={arrowLeft} alt="navigation back" />
         </button>
       </div>
       <div className={style.containerForward}>
@@ -46,7 +47,11 @@ export const PaginationMobile: FC<PaginationMobileProps> = ({
           onClick={handleNextClick}
           disabled={currentPage === totalPages}
         >
-          <img className={style.forward} src={arrowRight} alt="nav forward" />
+          <Img
+            className={style.forward}
+            src={arrowRight}
+            alt="navigation forward"
+          />
         </button>
       </div>
     </nav>

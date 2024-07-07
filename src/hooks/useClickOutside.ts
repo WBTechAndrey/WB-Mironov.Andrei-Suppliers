@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { useAppDispatch } from "hooks/redux/redux";
 
-const useClickOutside = (activeId: string | null, dispatch: Function) => {
+const useClickOutside = (
+  activeId: string | null,
+  action: ActionCreatorWithPayload<string | null>,
+) => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (!(event.target as HTMLElement).closest(".noClose")) {
-        dispatch(setActiveId(null));
+        dispatch(action(null));
       }
     };
 
@@ -16,7 +22,7 @@ const useClickOutside = (activeId: string | null, dispatch: Function) => {
     return () => {
       document.removeEventListener("mouseup", handleClickOutside);
     };
-  }, [activeId, dispatch]);
+  }, [action, activeId, dispatch]);
 
   useEffect(() => {
     return () => {

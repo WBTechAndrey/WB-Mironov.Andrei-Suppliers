@@ -58,7 +58,7 @@ export const Table = memo(() => {
   };
 
   if (isLoading || isFetching) {
-    return <FetchingInfo message={`Loading...`} />;
+    return <FetchingInfo message={`Загрузка...`} />;
   }
   if (error) {
     return <FetchingInfo message={`Упс... не удалось загрузить поставки`} />;

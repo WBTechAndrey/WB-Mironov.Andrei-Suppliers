@@ -7,12 +7,13 @@ import { createPortal } from "react-dom";
 import { EditShipment } from "components/Forms/EditShipment";
 import { DotLoader } from "components/common/Loaders/DotLoader";
 import { shipmentsAPI } from "store/API/shipmentsAPI";
-import { setActiveId } from "store/OpenDropDownMenu/isOpenSlice";
+import { setActiveTableId } from "store/OpenDropDownMenu/isOpenSlice";
 import { useAppDispatch } from "hooks/redux/redux";
 import { useSelector } from "react-redux";
-import { selectActiveId } from "store/OpenDropDownMenu/selectors";
+import { selectActiveTableId } from "store/OpenDropDownMenu/selectors";
 import { DesktopRowData } from "../../../constants";
 import { useModal } from "hooks/useModal";
+import { Img } from "components/common/Img";
 
 interface Warehouse {
   name: string;
@@ -56,15 +57,15 @@ export const DesktopRow: FC<DesktopRowProps> = ({ item }) => {
     deleteData(activeIdLocal);
   };
 
-  const activeId = useSelector(selectActiveId);
+  const activeId = useSelector(selectActiveTableId);
   const isActive = activeId === activeIdLocal;
   const dispatch = useAppDispatch();
   const handleFigureClick = (id: string) => {
     setActiveIdLocal(id);
     if (isActive) {
-      dispatch(setActiveId(null));
+      dispatch(setActiveTableId(null));
     } else {
-      dispatch(setActiveId(id));
+      dispatch(setActiveTableId(id));
     }
   };
 
@@ -117,13 +118,14 @@ export const DesktopRow: FC<DesktopRowProps> = ({ item }) => {
             {isLoading ? (
               <DotLoader />
             ) : (
-              <img src={ellipsis} alt="ellipsis icon" />
+              <Img src={ellipsis} alt="ellipsis icon" />
             )}
             <DropDown
               data={DesktopRowData}
               isActive={isActive}
               onClick={openModal}
               deleteShip={deleteDataFunc}
+              actionClose={setActiveTableId}
               classNames={[styleNames.twoRowsOnTable]}
             />
           </span>
